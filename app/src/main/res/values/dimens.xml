@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="padding_screen_bottom">10dp</dimen>
+    <dimen name="padding_screen_end">20dp</dimen>
+    <dimen name="padding_screen_start">20dp</dimen>
+    <dimen name="padding_screen_top">10dp</dimen>
+    <dimen name="size_text_chronometer">45sp</dimen>
+    <dimen name="height_button">60dp</dimen>
+</resources>

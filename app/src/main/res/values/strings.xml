@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Pool Laps Counter</string>
+    <string name="bt_play">INICIAR</string>
+    <string name="bt_pause">PAUSAR</string>
+    <string name="bt_restart">REINICIAR</string>
+    <string name="bt_lap">VOLTA +1</string>
+    <string name="no_records"><![CDATA[<Sem registros>]]></string>
+    <string name="title_laps">Tempo das voltas</string>
+</resources>
