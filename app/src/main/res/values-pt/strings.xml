@@ -13,4 +13,6 @@
     <string name="menu_settings">Configurações</string>
     <string name="bt_continue">CONTINUAR</string>
     <string name="menu_activities">Atividades</string>
+    <string name="bt_save">SALVAR</string>
+
 </resources>

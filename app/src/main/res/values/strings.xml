@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">Pool Laps Counter</string>
-    <string name="bt_play">INICIAR</string>
-    <string name="bt_pause">PAUSAR</string>
-    <string name="bt_restart">REINICIAR</string>
-    <string name="bt_lap">VOLTA +1</string>
-    <string name="no_records"><![CDATA[<Sem registros>]]></string>
-    <string name="title_laps">Tempo das voltas</string>
+    <string name="bt_play">PLAY</string>
+    <string name="bt_pause">PAUSE</string>
+    <string name="bt_restart">RESTART</string>
+    <string name="bt_lap">LAP +1</string>
+    <string name="no_records"><![CDATA[<No records>]]></string>
+    <string name="title_laps">Lap LOG</string>
+    <string name="info_distance_lap">Lap distance\n%s meters</string>
+    <string name="info_travelled">Travelled distance\n%s metros</string>
+    <string name="info_pace">Pace\n%s /100 m</string>
+    <string name="title_chronometer">Chronometer</string>
+    <string name="menu_settings">Settings</string>
+    <string name="bt_continue">RESUME</string>
+    <string name="menu_activities">Activities</string>
+    <string name="bt_save">SAVE</string>
 </resources>

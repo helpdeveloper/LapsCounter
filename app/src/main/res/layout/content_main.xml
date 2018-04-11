@@ -9,67 +9,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:baselineAligned="false"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/padding_screen_bottom"
-        android:paddingEnd="@dimen/padding_screen_end"
-        android:paddingStart="@dimen/padding_screen_start"
-        android:paddingTop="@dimen/padding_screen_top">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/ic_distance_pool"
-            android:gravity="center_vertical"
-            android:text="@string/info_distance_lap"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/ic_swim"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center_vertical"
-            android:text="@string/info_travelled" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawablePadding="10dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:drawableStart="@drawable/ic_pace"
-            android:gravity="center_vertical"
-            android:text="@string/info_pace" />
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/padding_screen_bottom"
         android:paddingEnd="@dimen/padding_screen_end"
         android:paddingStart="@dimen/padding_screen_start"
         android:paddingTop="@dimen/padding_screen_top">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -97,7 +50,14 @@
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_button"
-                    android:text="@string/bt_play" />
+                    android:text="@string/bt_continue" />
+
+                <Button
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button"
+                    android:text="@string/bt_play"
+                    android:visibility="gone" />
 
                 <Button
                     android:layout_width="match_parent"
@@ -111,11 +71,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_button"
-                    android:text="@string/bt_restart"
-                    android:theme="@style/AppTheme.Button.Red" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/height_button"
+                        android:layout_weight="1"
+                        android:text="@string/bt_restart"
+                        android:theme="@style/AppTheme.Button.Red" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/height_button"
+                        android:layout_weight="1"
+                        android:text="@string/bt_save"
+                        android:theme="@style/AppTheme.Button.Dark" />
+                </LinearLayout>
 
                 <Button
                     style="@style/Base.Widget.AppCompat.Button.Colored"
@@ -127,9 +101,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_screen_top"
             android:orientation="vertical">
 
 
@@ -164,4 +138,57 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_screen_bottom"
+        android:paddingEnd="@dimen/padding_screen_end"
+        android:paddingStart="@dimen/padding_screen_start"
+        android:paddingTop="@dimen/padding_screen_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_distance_pool"
+                android:gravity="center_vertical"
+                android:text="@string/info_distance_lap"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_pace"
+                android:gravity="center_vertical"
+                android:text="@string/info_pace"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_swim"
+            android:gravity="center_vertical"
+            android:text="@string/info_travelled"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 </LinearLayout>
