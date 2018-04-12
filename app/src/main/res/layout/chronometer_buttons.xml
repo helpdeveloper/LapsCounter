@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/buttons_frame_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_resume"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:text="@string/bt_continue"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_play"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:text="@string/bt_play"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_pause"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:text="@string/bt_pause"
+            android:theme="@style/AppTheme.Button.Red" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/buttons_frame_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/bt_restart"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_button"
+                android:layout_weight="1"
+                android:text="@string/bt_restart"
+                android:theme="@style/AppTheme.Button.Red" />
+
+            <Button
+                android:id="@+id/bt_save"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_button"
+                android:layout_weight="1"
+                android:text="@string/bt_save"
+                android:theme="@style/AppTheme.Button.Dark" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_lap"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:text="@string/bt_lap" />
+    </FrameLayout>
+</LinearLayout>

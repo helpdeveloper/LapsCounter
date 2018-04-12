@@ -1,14 +1,14 @@
 <resources>
-    <string name="app_name">Pool Laps Counter</string>
+    <string name="app_name">Chronometro de natação</string>
     <string name="bt_play">INICIAR</string>
     <string name="bt_pause">PAUSAR</string>
     <string name="bt_restart">REINICIAR</string>
     <string name="bt_lap">VOLTA +1</string>
     <string name="no_records"><![CDATA[<Sem registros>]]></string>
     <string name="title_laps">Registro de voltas</string>
-    <string name="info_distance_lap">Distância da volta\n%s metros</string>
-    <string name="info_travelled">Distância percorrida\n%s metros</string>
-    <string name="info_pace">Ritimo\n%s /100 m</string>
+    <string name="info_distance_lap">Volta\n50m</string>
+    <string name="info_travelled">Percorrido\n3050m</string>
+    <string name="info_pace">Ritimo\n3:00/100m</string>
     <string name="title_chronometer">Cronometro</string>
     <string name="menu_settings">Configurações</string>
     <string name="bt_continue">CONTINUAR</string>
