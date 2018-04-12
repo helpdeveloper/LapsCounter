@@ -1,4 +1,4 @@
-package br.com.helpdev.poollapscounter
+package br.com.helpdev.swimlapscounter
 
 import android.content.ComponentName
 import android.content.Context
@@ -6,7 +6,8 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
-import br.com.helpdev.poollapscounter.receiver.HeadsetButtonReceiver
+import br.com.helpdev.swimlapscounter.R
+import br.com.helpdev.swimlapscounter.receiver.HeadsetButtonReceiver
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 

@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "br.com.helpdev.poollapscounter"
+        applicationId "br.com.helpdev.swimlapscounter"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1

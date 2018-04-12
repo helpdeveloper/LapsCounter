@@ -7,7 +7,7 @@
     android:baselineAligned="true"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity">
+    tools:context="br.com.helpdev.swimlapscounter.MainActivity">
 
 
     <LinearLayout
