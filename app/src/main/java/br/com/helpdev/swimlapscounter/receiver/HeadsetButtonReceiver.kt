@@ -1,4 +1,4 @@
-package br.com.helpdev.poollapscounter.receiver
+package br.com.helpdev.swimlapscounter.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
