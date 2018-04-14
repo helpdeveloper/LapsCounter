@@ -1,15 +1,40 @@
-package br.com.helpdev.swimlapscounter.objects
+package br.com.helpdev.swimlapscounter.chronometer.objects
 
-class ObChronometer(val baseStart: Long) {
-    var baseEnd: Long? = null
+import java.io.Serializable
+
+class ObChronometer : Serializable {
+
+    private var pausedTime = 0L
+    private var startTime = 0L
+    private var endTime = 0L
+
     private val laps: ArrayList<ObLap> = ArrayList()
 
-    fun addLap(obLap: ObLap) {
-        laps.add(obLap)
+    init {
+        laps.add(ObLap())
     }
 
-    fun addPausedTimeToCurrentLap(millis: Long) =
-            if (laps.isEmpty()) 0L
-            else laps[laps.size - 1].addPausedTime(millis)
+    fun setStartTime(startTime: Long) {
+        this.startTime = startTime
+        laps.last().startTime = this.startTime
+    }
+
+    fun addPausedTime(pausedTime: Long) {
+        this.pausedTime.plus(pausedTime)
+        laps.last().pausedTime.plus(pausedTime)
+    }
+
+    fun setEndTime(endTime: Long) {
+        this.endTime = endTime
+        laps.last().endTime = endTime
+    }
+
+    fun newLap(currentTime: Long) = {
+        laps.last().endTime = currentTime
+        val lap = ObLap()
+        lap.startTime = currentTime
+        lap.chronometerTime = (currentTime - startTime) - pausedTime
+        laps.add(lap)
+    }
 
 }

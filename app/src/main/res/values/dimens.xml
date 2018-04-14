@@ -6,4 +6,5 @@
     <dimen name="padding_screen_top">10dp</dimen>
     <dimen name="size_text_chronometer">55sp</dimen>
     <dimen name="height_button">60dp</dimen>
+    <dimen name="size_text_chronometer_pause">20sp</dimen>
 </resources>

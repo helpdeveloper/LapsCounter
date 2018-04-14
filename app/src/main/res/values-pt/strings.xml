@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Chronometro de natação</string>
-    <string name="bt_play">INICIAR</string>
+    <string name="bt_start">INICIAR</string>
     <string name="bt_pause">PAUSAR</string>
     <string name="bt_restart">REINICIAR</string>
     <string name="bt_lap">VOLTA +1</string>
@@ -14,5 +14,6 @@
     <string name="bt_continue">CONTINUAR</string>
     <string name="menu_activities">Atividades</string>
     <string name="bt_save">SALVAR</string>
+    <string name="paused_time">TEMPO PAUSADO</string>
 
 </resources>

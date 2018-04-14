@@ -1,9 +1,12 @@
-package br.com.helpdev.swimlapscounter.objects
+package br.com.helpdev.swimlapscounter.chronometer.objects
 
-class ObLap(val baseStart: Long) {
+import java.io.Serializable
 
-    var baseEnd: Long? = null
+class ObLap : Serializable {
+
+    var chronometerTime = 0L
+
+    var startTime = 0L
     var pausedTime = 0L
-
-    fun addPausedTime(millis: Long) = pausedTime.plus(millis)
+    var endTime = 0L
 }

@@ -12,7 +12,7 @@ import android.view.View
 
 import java.text.DecimalFormat
 
-class Chronometer @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : AppCompatTextView(context, attrs, defStyle) {
+class ChronometerWidget @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : AppCompatTextView(context, attrs, defStyle) {
 
     private var mBase: Long = 0
     private var mVisible: Boolean = false
@@ -44,7 +44,7 @@ class Chronometer @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     interface OnChronometerTickListener {
 
-        fun onChronometerTick(chronometer: Chronometer)
+        fun onChronometerTick(chronometerWidget: ChronometerWidget)
     }
 
     init {
