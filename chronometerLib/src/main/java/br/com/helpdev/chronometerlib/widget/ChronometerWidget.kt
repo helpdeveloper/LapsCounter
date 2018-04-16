@@ -1,4 +1,4 @@
-package br.com.helpdev.swimlapscounter.chronometer.widget
+package br.com.helpdev.chronometerlib.widget
 
 
 import android.content.Context

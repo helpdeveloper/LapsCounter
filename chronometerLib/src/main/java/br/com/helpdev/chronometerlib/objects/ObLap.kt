@@ -1,4 +1,4 @@
-package br.com.helpdev.swimlapscounter.chronometer.objects
+package br.com.helpdev.chronometerlib.objects
 
 import java.io.Serializable
 

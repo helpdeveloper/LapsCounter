@@ -1,14 +1,14 @@
-package br.com.helpdev.swimlapscounter.chronometer
+package br.com.helpdev.chronometerlib
 
 import android.os.SystemClock
 import android.support.annotation.IntDef
-import br.com.helpdev.swimlapscounter.chronometer.objects.ObChronometer
+import br.com.helpdev.chronometerlib.objects.ObChronometer
 import java.io.Serializable
 
 class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : Serializable {
 
     @ChronometerStatus
-    private var status: Int = STATUS_STOPPED
+    private var status = STATUS_STOPPED
 
     private var runningStartBaseTime = 0L
     var pauseBaseTime = 0L

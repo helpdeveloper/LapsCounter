@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "br.com.helpdev.swimlapscounter"
+        applicationId "br.com.helpdev.lapscounter"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
@@ -17,6 +17,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    flavorDimensions "default"
+
+    productFlavors {
+        swimming { applicationIdSuffix ".swimming" }
+        running { applicationIdSuffix ".running" }
+        cycling { applicationIdSuffix ".cycling" }
     }
 }
 

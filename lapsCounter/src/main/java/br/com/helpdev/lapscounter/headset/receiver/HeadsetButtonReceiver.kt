@@ -1,4 +1,4 @@
-package br.com.helpdev.swimlapscounter.headset.receiver
+package br.com.helpdev.lapscounter.headset.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

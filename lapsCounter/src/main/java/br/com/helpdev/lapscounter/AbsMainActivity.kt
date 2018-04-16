@@ -1,4 +1,4 @@
-package br.com.helpdev.swimlapscounter
+package br.com.helpdev.lapscounter
 
 import android.os.Bundle
 import android.os.SystemClock
@@ -6,14 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.View
 import br.com.helpdev.chronometerlib.Chronometer
-import br.com.helpdev.swimlapscounter.headset.HeadsetButtonControl
+import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
 import kotlinx.android.synthetic.main.chronometer_buttons.*
 import kotlinx.android.synthetic.main.chronometers.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class MainActivity : AppCompatActivity() {
+abstract class AbsMainActivity : AppCompatActivity() {
 
     private var chronometer: Chronometer? = null
     private val headsetButtonReceiver = HeadsetButtonControl()

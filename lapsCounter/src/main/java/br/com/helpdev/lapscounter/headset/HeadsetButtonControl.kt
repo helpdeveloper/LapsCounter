@@ -1,9 +1,9 @@
-package br.com.helpdev.swimlapscounter.headset
+package br.com.helpdev.lapscounter.headset
 
 import android.content.ComponentName
 import android.content.Context
 import android.media.AudioManager
-import br.com.helpdev.swimlapscounter.headset.receiver.HeadsetButtonReceiver
+import br.com.helpdev.lapscounter.headset.receiver.HeadsetButtonReceiver
 
 class HeadsetButtonControl {
 

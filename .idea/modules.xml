@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SwimLapsCounter.iml" filepath="$PROJECT_DIR$/SwimLapsCounter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chronometerLib/chronometerLib.iml" filepath="$PROJECT_DIR$/chronometerLib/chronometerLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lapsCounter/lapsCounter.iml" filepath="$PROJECT_DIR$/lapsCounter/lapsCounter.iml" />
     </modules>
   </component>
 </project>
