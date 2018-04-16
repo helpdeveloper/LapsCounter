@@ -5,7 +5,7 @@ import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.View
-import br.com.helpdev.swimlapscounter.chronometer.Chronometer
+import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.swimlapscounter.headset.HeadsetButtonControl
 import kotlinx.android.synthetic.main.chronometer_buttons.*
 import kotlinx.android.synthetic.main.chronometers.*
