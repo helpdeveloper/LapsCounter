@@ -9,6 +9,8 @@ import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
+import kotlinx.android.synthetic.main.include_lap_log.*
+import kotlinx.android.synthetic.main.item_lap_log.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -40,14 +42,20 @@ abstract class AbsMainActivity : AppCompatActivity() {
             bt_pause.visibility = savedInstanceState.getInt("bt_pause")
             bt_resume.visibility = savedInstanceState.getInt("bt_resume")
             layout_chronometer_pause.visibility = savedInstanceState.getInt("layout_chronometer_pause")
+            chronometer_lap_log.visibility = savedInstanceState.getInt("chronometer_lap_log")
+            text_view_empty.visibility = savedInstanceState.getInt("text_view_empty")
+            chronometerLogPause.visibility = savedInstanceState.getInt("chronometerLogPause")
 
-            chronometerWidget.base = chronometer!!.getCurrentBase()
+            refreshBasesTotal()
             if (View.VISIBLE == bt_pause.visibility) {
-                chronometerWidget.start()
+                startChronometersWidget()
+                if (View.VISIBLE == chronometerLogPause.visibility) {
+                    chronometerLogPause.base = chronometer!!.getLastLapBasePause()
+                }
             } else {
-                chronometerWidgetPause.base = chronometer!!.pauseBaseTime
-                chronometerWidgetPause.start()
+                startChronometersPause()
             }
+            refreshChronometerLog()
         }
     }
 
@@ -60,6 +68,9 @@ abstract class AbsMainActivity : AppCompatActivity() {
         outState.putInt("bt_pause", bt_pause.visibility)
         outState.putInt("bt_resume", bt_resume.visibility)
         outState.putInt("layout_chronometer_pause", layout_chronometer_pause.visibility)
+        outState.putInt("chronometer_lap_log", chronometer_lap_log.visibility)
+        outState.putInt("text_view_empty", text_view_empty.visibility)
+        outState.putInt("chronometerLogPause", chronometerLogPause.visibility)
         super.onSaveInstanceState(outState)
     }
 
@@ -68,29 +79,63 @@ abstract class AbsMainActivity : AppCompatActivity() {
         buttons_frame_2.visibility = View.VISIBLE
         bt_start.visibility = View.GONE
         bt_pause.visibility = View.VISIBLE
+        chronometer_lap_log.visibility = View.VISIBLE
+        text_view_empty.visibility = View.GONE
+        refreshChronometerLog()
     }
 
     private fun btResumePressed() {
         btStartResumePressed()
         changeLayoutPauseResume(false)
+        chronometerLogPause.stop()
+        chronometerWidgetPause.stop()
     }
 
     private fun btStartResumePressed() {
         chronometer!!.start()
-        chronometerWidget.base = chronometer!!.getCurrentBase()
-        chronometerWidget.start()
+        refreshBasesTotal()
+        startChronometersWidget()
+        refreshChronometerLog()
     }
 
     private fun btLapPressed() {
         chronometer!!.lap()
+        chronometerLogPause.visibility = View.INVISIBLE
+        refreshChronometerLog()
     }
+
+    private fun refreshBasesTotal() {
+        chronometerWidget.base = chronometer!!.getCurrentBase()
+        chronometerLogWidget.base = chronometer!!.getCurrentBase()
+    }
+
+    private fun startChronometersWidget() {
+        chronometerWidget.start()
+        chronometerLogWidget.start()
+        chronometerLogCurrent.start()
+    }
+
+    private fun refreshChronometerLog() {
+        numberOfLap.text = getString(R.string.num_lap, chronometer!!.getObChronometer().laps.size)
+        chronometerLogCurrent.base = chronometer!!.getBaseLastLap()
+    }
+
 
     private fun btPausePressed() {
         chronometer!!.stop()
         chronometerWidget.stop()
-        chronometerWidgetPause.base = SystemClock.elapsedRealtime()
-        chronometerWidgetPause.start()
+        chronometerLogWidget.stop()
+        chronometerLogCurrent.stop()
+        startChronometersPause()
         changeLayoutPauseResume(true)
+    }
+
+    private fun startChronometersPause() {
+        chronometerLogPause.visibility = View.VISIBLE
+        chronometerWidgetPause.base = chronometer!!.pauseBaseTime
+        chronometerLogPause.base = chronometer!!.getLastLapBasePause()
+        chronometerWidgetPause.start()
+        chronometerLogPause.start()
     }
 
     private fun changeLayoutPauseResume(paused: Boolean) {
@@ -107,8 +152,17 @@ abstract class AbsMainActivity : AppCompatActivity() {
 
     private fun btRestartPressed() {
         chronometer!!.reset()
+
         chronometerWidget.base = SystemClock.elapsedRealtime()
+        chronometerLogWidget.base = SystemClock.elapsedRealtime()
+        chronometerLogCurrent.base = SystemClock.elapsedRealtime()
+        chronometerLogPause.base = SystemClock.elapsedRealtime()
+
+        chronometerLogCurrent.stop()
         chronometerWidget.stop()
+        chronometerLogWidget.stop()
+        chronometerLogPause.stop()
+
         buttons_frame_2.visibility = View.GONE
         bt_start.visibility = View.VISIBLE
         buttons_lay_restart_save.visibility = View.GONE
@@ -116,6 +170,9 @@ abstract class AbsMainActivity : AppCompatActivity() {
         bt_pause.visibility = View.GONE
         bt_resume.visibility = View.GONE
         layout_chronometer_pause.visibility = View.INVISIBLE
+        chronometer_lap_log.visibility = View.GONE
+        text_view_empty.visibility = View.VISIBLE
+        chronometerLogPause.visibility = View.INVISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

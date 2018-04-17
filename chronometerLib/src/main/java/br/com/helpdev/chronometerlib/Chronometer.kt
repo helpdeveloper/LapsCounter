@@ -36,21 +36,6 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
         return getRunningTime()
     }
 
-    /**
-     * Return the running time.
-     */
-    fun getRunningTime() = SystemClock.elapsedRealtime() - getCurrentBase()
-
-
-    /**
-     * Return the current base of chronometer widget
-     */
-    fun getCurrentBase() = when {
-        0L == runningStartBaseTime -> SystemClock.elapsedRealtime()
-        pauseBaseTime > 0 -> runningStartBaseTime + (SystemClock.elapsedRealtime() - pauseBaseTime)
-        else -> runningStartBaseTime
-    }
-
 
     /**
      * Stop/Pause chronometer
@@ -76,6 +61,37 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
     fun getObChronometer() = obChronometer
 
     fun lap() = obChronometer.newLap(SystemClock.elapsedRealtime())
+
+    /**
+     * Return the running time.
+     */
+    fun getRunningTime() = SystemClock.elapsedRealtime() - getCurrentBase()
+
+
+    /**
+     * Return the current base of chronometer widget
+     */
+    fun getCurrentBase() = when {
+        0L == runningStartBaseTime -> SystemClock.elapsedRealtime()
+        pauseBaseTime > 0 -> runningStartBaseTime + (SystemClock.elapsedRealtime() - pauseBaseTime)
+        else -> runningStartBaseTime
+    }
+
+    /**
+     * Return the base of pause in the last lap
+     */
+    fun getLastLapBasePause() = when (pauseBaseTime) {
+        0L -> SystemClock.elapsedRealtime() - getObChronometer().laps.last().pausedTime
+        else -> pauseBaseTime - getObChronometer().laps.last().pausedTime
+    }
+
+    /**
+     * Return the base of the last lap
+     */
+    fun getBaseLastLap() = when (pauseBaseTime) {
+        0L -> getObChronometer().laps.last().getBase()
+        else -> getObChronometer().laps.last().getBase() + (SystemClock.elapsedRealtime() - pauseBaseTime)
+    }
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @IntDef(STATUS_STARTED, STATUS_STOPPED)

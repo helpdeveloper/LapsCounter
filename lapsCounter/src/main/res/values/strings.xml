@@ -15,4 +15,6 @@
     <string name="menu_activities">Activities</string>
     <string name="bt_save">SAVE</string>
     <string name="paused_time">PAUSED TIME</string>
+    <string name="num_lap">Nº %d</string>
+    <string name="default_time_zero">00:00:00</string>
 </resources>

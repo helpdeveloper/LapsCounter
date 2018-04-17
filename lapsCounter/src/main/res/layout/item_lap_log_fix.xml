@@ -25,31 +25,44 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <br.com.helpdev.chronometerlib.widget.ChronometerWidget
-                android:id="@+id/chronometerLogCurrent"
+            <TextView
+                android:id="@+id/chronometer_current_fix"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:text="@string/default_time_zero"
                 android:textStyle="bold" />
 
-            <br.com.helpdev.chronometerlib.widget.ChronometerWidget
-                android:id="@+id/chronometerLogWidget"
+
+            <TextView
+                android:id="@+id/chronometer_total_fix"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:text="@string/default_time_zero"
                 android:textStyle="bold" />
+        </LinearLayout>
 
-            <br.com.helpdev.chronometerlib.widget.ChronometerWidget
-                android:id="@+id/chronometerLogPause"
+        <LinearLayout
+            android:id="@+id/item_layout_pause_fix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/chronometer_pause_fix"
                 style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:text="@string/default_time_zero"
                 android:textColor="@color/red" />
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

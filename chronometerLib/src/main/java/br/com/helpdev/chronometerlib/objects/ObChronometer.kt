@@ -8,7 +8,7 @@ class ObChronometer : Serializable {
     private var startTime = 0L
     private var endTime = 0L
 
-    private val laps: ArrayList<ObLap> = ArrayList()
+    val laps: ArrayList<ObLap> = ArrayList()
 
     init {
         laps.add(ObLap())
@@ -20,8 +20,8 @@ class ObChronometer : Serializable {
     }
 
     fun addPausedTime(pausedTime: Long) {
-        this.pausedTime.plus(pausedTime)
-        laps.last().pausedTime.plus(pausedTime)
+        this.pausedTime = this.pausedTime.plus(pausedTime)
+        laps.last().pausedTime = laps.last().pausedTime.plus(pausedTime)
     }
 
     fun setEndTime(endTime: Long) {
@@ -29,12 +29,12 @@ class ObChronometer : Serializable {
         laps.last().endTime = endTime
     }
 
-    fun newLap(currentTime: Long) = {
+    fun newLap(currentTime: Long): Boolean {
         laps.last().endTime = currentTime
         val lap = ObLap()
         lap.startTime = currentTime
         lap.chronometerTime = (currentTime - startTime) - pausedTime
-        laps.add(lap)
+        return laps.add(lap)
     }
 
 }
