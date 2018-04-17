@@ -52,7 +52,7 @@ abstract class AbsMainActivity : AppCompatActivity() {
                 if (View.VISIBLE == chronometerLogPause.visibility) {
                     chronometerLogPause.base = chronometer!!.getLastLapBasePause()
                 }
-            } else {
+            } else if (View.VISIBLE != bt_start.visibility) {
                 startChronometersPause()
             }
             refreshChronometerLog()
