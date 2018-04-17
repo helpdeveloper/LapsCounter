@@ -7,9 +7,8 @@ import android.view.Menu
 import android.view.View
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
-import kotlinx.android.synthetic.main.chronometer_buttons.*
-import kotlinx.android.synthetic.main.chronometers.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.include_buttons.*
+import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -22,8 +21,6 @@ abstract class AbsMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        list_view.emptyView = text_view_empty
 
         bt_start.setOnClickListener { btStartPressed() }
         bt_resume.setOnClickListener { btResumePressed() }
@@ -44,7 +41,7 @@ abstract class AbsMainActivity : AppCompatActivity() {
             bt_resume.visibility = savedInstanceState.getInt("bt_resume")
             layout_chronometer_pause.visibility = savedInstanceState.getInt("layout_chronometer_pause")
 
-            chronometerWidget.base = SystemClock.elapsedRealtime() - chronometer!!.getCurrentBaseTime()
+            chronometerWidget.base = chronometer!!.getCurrentBase()
             if (View.VISIBLE == bt_pause.visibility) {
                 chronometerWidget.start()
             } else {
@@ -79,8 +76,8 @@ abstract class AbsMainActivity : AppCompatActivity() {
     }
 
     private fun btStartResumePressed() {
-        val time = chronometer!!.start()
-        chronometerWidget.base = SystemClock.elapsedRealtime() - time
+        chronometer!!.start()
+        chronometerWidget.base = chronometer!!.getCurrentBase()
         chronometerWidget.start()
     }
 
@@ -101,7 +98,7 @@ abstract class AbsMainActivity : AppCompatActivity() {
         bt_lap.visibility = if (paused) View.GONE else View.VISIBLE
         bt_pause.visibility = if (paused) View.GONE else View.VISIBLE
         bt_resume.visibility = if (paused) View.VISIBLE else View.GONE
-        layout_chronometer_pause.visibility = if (paused) View.VISIBLE else View.GONE
+        layout_chronometer_pause.visibility = if (paused) View.VISIBLE else View.INVISIBLE
     }
 
     private fun btSavePressed() {
@@ -118,7 +115,7 @@ abstract class AbsMainActivity : AppCompatActivity() {
         bt_lap.visibility = View.VISIBLE
         bt_pause.visibility = View.GONE
         bt_resume.visibility = View.GONE
-        layout_chronometer_pause.visibility = View.GONE
+        layout_chronometer_pause.visibility = View.INVISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -13,70 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:orientation="horizontal"
         android:paddingBottom="@dimen/padding_screen_bottom"
         android:paddingEnd="@dimen/padding_screen_end"
         android:paddingStart="@dimen/padding_screen_start"
         android:paddingTop="@dimen/padding_screen_top">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/Base.TextAppearance.AppCompat.Small"
+            <include
+                layout="@layout/include_chronometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                layout="@layout/include_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/title_chronometer"
-                android:textAllCaps="true"
-                android:textStyle="bold" />
+                android:layout_alignParentBottom="true" />
 
-            <include layout="@layout/chronometers" />
+        </RelativeLayout>
 
-            <include layout="@layout/chronometer_buttons" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <include
             android:id="@+id/layout_log"
+            layout="@layout/include_lap_log"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-
-            <TextView
-                style="@style/Base.TextAppearance.AppCompat.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/title_laps"
-                android:textAllCaps="true"
-                android:textStyle="bold" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <ListView
-                    android:id="@+id/list_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/text_view_empty"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:text="@string/no_records"
-                    android:visibility="gone" />
-
-            </FrameLayout>
-        </LinearLayout>
+            android:layout_weight="1" />
 
     </LinearLayout>
 

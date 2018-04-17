@@ -16,8 +16,12 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
             field = value
         }
 
+    /**
+     * Start/Resume the chronometer
+     * Return the running time.
+     */
     fun start(): Long {
-        if (STATUS_STARTED == status) return getCurrentBaseTime()
+        if (STATUS_STARTED == status) return getRunningTime()
         status = STATUS_STARTED
         //--
         if (0L == runningStartBaseTime) {
@@ -29,25 +33,40 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
             runningStartBaseTime += pausedTime
             pauseBaseTime = 0L
         }
-        return getCurrentBaseTime()
+        return getRunningTime()
     }
 
-    fun getCurrentBaseTime(): Long {
-        if (pauseBaseTime > 0) {
-            return SystemClock.elapsedRealtime() - (runningStartBaseTime + (SystemClock.elapsedRealtime() - pauseBaseTime))
-        }
-        return SystemClock.elapsedRealtime() - runningStartBaseTime
+    /**
+     * Return the running time.
+     */
+    fun getRunningTime() = SystemClock.elapsedRealtime() - getCurrentBase()
+
+
+    /**
+     * Return the current base of chronometer widget
+     */
+    fun getCurrentBase() = when {
+        0L == runningStartBaseTime -> SystemClock.elapsedRealtime()
+        pauseBaseTime > 0 -> runningStartBaseTime + (SystemClock.elapsedRealtime() - pauseBaseTime)
+        else -> runningStartBaseTime
     }
 
 
+    /**
+     * Stop/Pause chronometer
+     * Return the running time.
+     */
     fun stop(): Long {
-        if (STATUS_STOPPED == status) return getCurrentBaseTime()
+        if (STATUS_STOPPED == status) return getRunningTime()
         status = STATUS_STOPPED
         pauseBaseTime = SystemClock.elapsedRealtime()
         obChronometer.setEndTime(pauseBaseTime)
-        return getCurrentBaseTime()
+        return getRunningTime()
     }
 
+    /**
+     * Reset values of chronometer
+     */
     fun reset() {
         obChronometer = ObChronometer()
         runningStartBaseTime = 0L
