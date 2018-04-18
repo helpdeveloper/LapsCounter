@@ -31,9 +31,9 @@ class ObChronometer : Serializable {
 
     fun newLap(currentTime: Long): Boolean {
         laps.last().endTime = currentTime
+        laps.last().chronometerTime = (currentTime - startTime) - pausedTime
         val lap = ObLap()
         lap.startTime = currentTime
-        lap.chronometerTime = (currentTime - startTime) - pausedTime
         return laps.add(lap)
     }
 

@@ -3,6 +3,7 @@ package br.com.helpdev.lapscounter
 import android.os.Bundle
 import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
 import br.com.helpdev.chronometerlib.Chronometer
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.item_lap_log.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-abstract class AbsMainActivity : AppCompatActivity() {
+abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
 
     private var chronometer: Chronometer? = null
     private val headsetButtonReceiver = HeadsetButtonControl()
@@ -56,7 +57,12 @@ abstract class AbsMainActivity : AppCompatActivity() {
                 startChronometersPause()
             }
             refreshChronometerLog()
+            createAdapter()
         }
+    }
+
+    private fun createAdapter() {
+        recycler_view.adapter = LapsAdapter(this, chronometer!!.getObChronometer())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -75,6 +81,7 @@ abstract class AbsMainActivity : AppCompatActivity() {
     }
 
     private fun btStartPressed() {
+        createAdapter()
         btStartResumePressed()
         buttons_frame_2.visibility = View.VISIBLE
         bt_start.visibility = View.GONE
@@ -102,6 +109,10 @@ abstract class AbsMainActivity : AppCompatActivity() {
         chronometer!!.lap()
         chronometerLogPause.visibility = View.INVISIBLE
         refreshChronometerLog()
+        recycler_view.adapter.notifyDataSetChanged()
+        recycler_view.postDelayed({
+            recycler_view.scrollToPosition(recycler_view.adapter.itemCount)
+        }, 100)
     }
 
     private fun refreshBasesTotal() {
@@ -116,7 +127,7 @@ abstract class AbsMainActivity : AppCompatActivity() {
     }
 
     private fun refreshChronometerLog() {
-        numberOfLap.text = getString(R.string.num_lap, chronometer!!.getObChronometer().laps.size)
+        numberOfLap.text = getString(R.string.num_lap, String.format("%02d", chronometer!!.getObChronometer().laps.size))
         chronometerLogCurrent.base = chronometer!!.getBaseLastLap()
     }
 
@@ -173,6 +184,8 @@ abstract class AbsMainActivity : AppCompatActivity() {
         chronometer_lap_log.visibility = View.GONE
         text_view_empty.visibility = View.VISIBLE
         chronometerLogPause.visibility = View.INVISIBLE
+
+        recycler_view.adapter = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -182,12 +195,33 @@ abstract class AbsMainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        headsetButtonReceiver.registerHeadsetButton(this)
+        headsetButtonReceiver.registerHeadsetButton(this, this)
     }
 
-    override fun onStop() {
-        headsetButtonReceiver.unregisterHeadsetButton()
-        super.onStop()
+    override fun onPause() {
+        headsetButtonReceiver.unregisterHeadsetButton(this)
+        super.onPause()
+    }
+
+    override fun btHeadsetHookPressed(keyEvent: KeyEvent?) {
+        when {
+            View.VISIBLE == bt_start.visibility -> btStartPressed()
+            View.VISIBLE == bt_resume.visibility -> btResumePressed()
+            View.VISIBLE == bt_lap.visibility -> btLapPressed()
+        }
+    }
+
+    override fun btHeadsetHookDoubleClickPressed(keyEvent: KeyEvent?) {
+        if (View.VISIBLE == bt_pause.visibility) btPausePressed()
+    }
+
+    override fun btHeadsetMediaNextPressed(keyEvent: KeyEvent?) {
+    }
+
+    override fun btHeadsetMediaPreviousPressed(keyEvent: KeyEvent?) {
+    }
+
+    override fun btHeadsetUndefinedPressed(keyEvent: KeyEvent?) {
     }
 
     override fun onBackPressed() {

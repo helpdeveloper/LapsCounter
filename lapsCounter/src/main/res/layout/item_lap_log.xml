@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
     android:orientation="horizontal">
 
     <TextView
@@ -13,6 +12,7 @@
         android:layout_marginEnd="20dp"
         android:gravity="center_vertical"
         android:text="@string/num_lap"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -30,6 +30,7 @@
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:layout_marginEnd="10dp"
                 android:textStyle="bold" />
 
@@ -37,6 +38,7 @@
                 android:id="@+id/chronometerLogWidget"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:textStyle="bold" />
@@ -46,8 +48,8 @@
                 style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                android:textColor="@color/red" />
+                android:textColor="@color/red"
+                android:visibility="invisible" />
         </LinearLayout>
 
     </LinearLayout>
