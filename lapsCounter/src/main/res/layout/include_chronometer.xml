@@ -25,8 +25,7 @@
         android:id="@+id/layout_chronometer_pause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:orientation="vertical">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Small"
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/red"
-            android:textSize="@dimen/size_text_chronometer_pause" />
+            android:textSize="@dimen/size_text_highlight" />
     </LinearLayout>
 
 </LinearLayout>

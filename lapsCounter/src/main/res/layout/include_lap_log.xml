@@ -9,11 +9,19 @@
         style="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="3dp"
         android:gravity="center"
         android:text="@string/title_laps"
         android:textAllCaps="true"
         android:textStyle="bold" />
+
+    <TextView
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:gravity="center"
+        android:text="@string/sub_title_laps"/>
 
     <TextView
         android:id="@+id/text_view_empty"
@@ -24,7 +32,7 @@
 
     <include
         android:id="@+id/chronometer_lap_log"
-        layout="@layout/item_lap_log"
+        layout="@layout/lap_log_chronometers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

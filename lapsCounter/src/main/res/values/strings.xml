@@ -6,6 +6,7 @@
     <string name="bt_lap">LAP +1</string>
     <string name="no_records"><![CDATA[<No records>]]></string>
     <string name="title_laps">Lap LOG</string>
+    <string name="sub_title_laps">Lap - Time - Accumulated - Paused</string>
     <string name="info_distance_lap">Lap\n50m</string>
     <string name="info_travelled">Travelled\n3025m</string>
     <string name="info_pace">Pace\n3:00/100m</string>

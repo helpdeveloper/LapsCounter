@@ -4,6 +4,7 @@ import android.os.SystemClock
 import android.support.annotation.IntDef
 import br.com.helpdev.chronometerlib.objects.ObChronometer
 import java.io.Serializable
+import java.text.DecimalFormat
 
 class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : Serializable {
 
@@ -100,5 +101,31 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
     companion object {
         const val STATUS_STARTED = 1
         const val STATUS_STOPPED = 3
+
+        fun getFormatedTime(timeElapsed: Long): String {
+            val df = DecimalFormat("00")
+
+            val hours = (timeElapsed / (3600 * 1000)).toInt()
+            var remaining = (timeElapsed % (3600 * 1000)).toInt()
+
+            val minutes = remaining / (60 * 1000)
+            remaining %= (60 * 1000)
+
+            val seconds = remaining / 1000
+            remaining %= 1000
+
+            val milliseconds = timeElapsed.toInt() % 1000 / 100
+
+            var text = ""
+
+            if (hours > 0) {
+                text += df.format(hours.toLong()) + ":"
+            }
+
+            text += df.format(minutes.toLong()) + ":"
+            text += df.format(seconds.toLong()) + "."
+            text += Integer.toString(milliseconds)
+            return text
+        }
     }
 }

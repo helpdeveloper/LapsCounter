@@ -1,5 +1,6 @@
 package br.com.helpdev.lapscounter
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
@@ -11,8 +12,8 @@ import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.include_lap_log.*
-import kotlinx.android.synthetic.main.item_lap_log.*
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.lap_log_chronometers.*
+import kotlinx.android.synthetic.main.main_toolbar.*
 
 
 abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
@@ -45,13 +46,14 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
             layout_chronometer_pause.visibility = savedInstanceState.getInt("layout_chronometer_pause")
             chronometer_lap_log.visibility = savedInstanceState.getInt("chronometer_lap_log")
             text_view_empty.visibility = savedInstanceState.getInt("text_view_empty")
-            chronometerLogPause.visibility = savedInstanceState.getInt("chronometerLogPause")
 
             refreshBasesTotal()
             if (View.VISIBLE == bt_pause.visibility) {
                 startChronometersWidget()
-                if (View.VISIBLE == chronometerLogPause.visibility) {
-                    chronometerLogPause.base = chronometer!!.getLastLapBasePause()
+                val x = chronometer!!.getLastLapBasePause()
+                if (x != SystemClock.elapsedRealtime()) {
+                    chronometerLogPause.setTextColor(Color.RED)
+                    chronometerLogPause.base = x
                 }
             } else if (View.VISIBLE != bt_start.visibility) {
                 startChronometersPause()
@@ -76,7 +78,6 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         outState.putInt("layout_chronometer_pause", layout_chronometer_pause.visibility)
         outState.putInt("chronometer_lap_log", chronometer_lap_log.visibility)
         outState.putInt("text_view_empty", text_view_empty.visibility)
-        outState.putInt("chronometerLogPause", chronometerLogPause.visibility)
         super.onSaveInstanceState(outState)
     }
 
@@ -107,12 +108,11 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
 
     private fun btLapPressed() {
         chronometer!!.lap()
-        chronometerLogPause.visibility = View.INVISIBLE
+        chronometerLogPause.base = SystemClock.elapsedRealtime()
+        chronometerLogPause.setTextColor(Color.BLACK)
         refreshChronometerLog()
         recycler_view.adapter.notifyDataSetChanged()
-        recycler_view.postDelayed({
-            recycler_view.scrollToPosition(recycler_view.adapter.itemCount)
-        }, 100)
+        recycler_view.smoothScrollToPosition(recycler_view.adapter.itemCount)
     }
 
     private fun refreshBasesTotal() {
@@ -142,7 +142,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun startChronometersPause() {
-        chronometerLogPause.visibility = View.VISIBLE
+        chronometerLogPause.setTextColor(Color.RED)
         chronometerWidgetPause.base = chronometer!!.pauseBaseTime
         chronometerLogPause.base = chronometer!!.getLastLapBasePause()
         chronometerWidgetPause.start()
@@ -183,7 +183,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         layout_chronometer_pause.visibility = View.INVISIBLE
         chronometer_lap_log.visibility = View.GONE
         text_view_empty.visibility = View.VISIBLE
-        chronometerLogPause.visibility = View.INVISIBLE
+        chronometerLogPause.setTextColor(Color.BLACK)
 
         recycler_view.adapter = null
     }
