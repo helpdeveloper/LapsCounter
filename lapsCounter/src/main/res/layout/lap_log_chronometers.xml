@@ -8,7 +8,7 @@
         android:id="@+id/numberOfLap"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center_vertical"
         android:text="@string/num_lap"
         android:textColor="@color/black"
@@ -45,10 +45,10 @@
 
             <br.com.helpdev.chronometerlib.widget.ChronometerWidget
                 android:id="@+id/chronometerLogPause"
-                style="@style/Base.TextAppearance.AppCompat.Medium"
+                style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:textColor="@color/colorSecondaryText" />
         </LinearLayout>
 
     </LinearLayout>

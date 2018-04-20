@@ -25,7 +25,8 @@
         android:id="@+id/layout_chronometer_pause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Small"
@@ -38,11 +39,12 @@
 
         <br.com.helpdev.chronometerlib.widget.ChronometerWidget
             android:id="@+id/chronometerWidgetPause"
+            style="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/red"
-            android:textSize="@dimen/size_text_highlight" />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

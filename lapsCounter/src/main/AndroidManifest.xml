@@ -20,6 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_settings"
+            android:parentActivityName="br.com.helpdev.lapscounter.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ActivitiesActivity"
+            android:label="@string/title_activities"
+            android:parentActivityName="br.com.helpdev.lapscounter.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name="br.com.helpdev.lapscounter.headset.receiver.HeadsetButtonReceiver"

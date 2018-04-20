@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_headset_buttons_name">pref_name_headset_buttons</string>
+    <bool name="pref_headset_buttons_default_value">true</bool>
+
+    <string name="pref_lap_distance_name">pref_lap_distance_name</string>
+    <string name="pref_lap_distance_default_value">50</string>
+
+    <string name="pref_headset_buttons_title">Control with the headset button</string>
+    <string name="pref_headset_buttons_summary">Use the handset button to start and lap. Two clicks pause and one resume.</string>
+    <string name="pref_lap_distance_title"> Lap distance</string>
+    <string name="pref_lap_distance_summary">Each lap will be counted %s meters</string>
+
+</resources>

@@ -40,6 +40,14 @@
         android:layout_height="wrap_content"
         android:visibility="gone">
 
+        <Button
+            android:id="@+id/bt_stop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:text="@string/bt_stop"
+            android:theme="@style/AppTheme.Button.Red"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/buttons_lay_restart_save"
             android:layout_width="match_parent"
@@ -71,4 +79,5 @@
             android:layout_height="@dimen/height_button"
             android:text="@string/bt_lap" />
     </FrameLayout>
+
 </LinearLayout>

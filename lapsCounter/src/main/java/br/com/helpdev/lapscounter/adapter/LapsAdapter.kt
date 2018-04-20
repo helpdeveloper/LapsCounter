@@ -1,4 +1,4 @@
-package br.com.helpdev.lapscounter
+package br.com.helpdev.lapscounter.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.chronometerlib.objects.ObChronometer
-import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import br.com.helpdev.lapscounter.R
 
 class LapsAdapter(private val context: Context, private val obChronometer: ObChronometer) : RecyclerView.Adapter<LapsAdapter.Companion.ItemHolder>() {
 
@@ -25,19 +23,17 @@ class LapsAdapter(private val context: Context, private val obChronometer: ObChr
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val obLap = obChronometer.laps[position]
         holder.numLap.text = context.getString(R.string.num_lap, String.format("%02d", position + 1))
-        holder.tvTime.text = Chronometer.getFormatedTime(obLap.getRunningTime())
+        holder.tvTime.text = Chronometer.getFormattedTime(obLap.getRunningTime())
         if (obLap.pausedTime > 0) {
-            holder.tvTotalPauseTime.text = Chronometer.getFormatedTime(obLap.pausedTime)
+            holder.tvTotalPauseTime.text = Chronometer.getFormattedTime(obLap.pausedTime)
             holder.tvTotalPauseTime.setTextColor(Color.RED)
         } else {
             holder.tvTotalPauseTime.setTextColor(context.resources.getColor(R.color.colorSecondaryText))
         }
-        holder.tvTotalTime.text = Chronometer.getFormatedTime(obLap.chronometerTime)
+        holder.tvTotalTime.text = Chronometer.getFormattedTime(obLap.chronometerTime)
     }
 
     companion object {
-        private val SDF = SimpleDateFormat("HH:MM:ss.m", Locale.getDefault())
-
         class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val numLap: TextView = itemView.findViewById(R.id.numberOfLap_fix)
             val tvTime: TextView = itemView.findViewById(R.id.chronometer_current_fix)

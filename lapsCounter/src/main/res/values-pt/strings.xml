@@ -16,5 +16,8 @@
     <string name="menu_activities">Atividades</string>
     <string name="bt_save">SALVAR</string>
     <string name="paused_time">TEMPO PAUSADO</string>
+    <string name="bt_stop">PARAR</string>
+    <string name="title_settings">Configurações</string>
+    <string name="title_activities">Atividades</string>
 
 </resources>

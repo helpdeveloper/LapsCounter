@@ -105,8 +105,9 @@ class ChronometerWidget @JvmOverloads constructor(context: Context, attrs: Attri
 
         text += df.format(minutes.toLong()) + ":"
         text += df.format(seconds.toLong()) + "."
-        text += Integer.toString(milliseconds)
-
+        if (hours <= 0) {
+            text += Integer.toString(milliseconds)
+        }
         setText(text)
     }
 

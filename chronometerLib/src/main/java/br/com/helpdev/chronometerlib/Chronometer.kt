@@ -9,13 +9,13 @@ import java.text.DecimalFormat
 class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : Serializable {
 
     @ChronometerStatus
-    private var status = STATUS_STOPPED
+    var status = STATUS_STOPPED
+        private set
 
     private var runningStartBaseTime = 0L
-    var pauseBaseTime = 0L
-        private set(value) {
-            field = value
-        }
+    private var stopBaseTime = 0L
+
+    private var pauseBaseTime = 0L
 
     /**
      * Start/Resume the chronometer
@@ -23,6 +23,9 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
      */
     fun start(): Long {
         if (STATUS_STARTED == status) return getRunningTime()
+        if (STATUS_STOPPED == status && stopBaseTime > 0) {
+            reset()
+        }
         status = STATUS_STARTED
         //--
         if (0L == runningStartBaseTime) {
@@ -39,15 +42,25 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
 
 
     /**
-     * Stop/Pause chronometer
+     * Pause chronometer
      * Return the running time.
      */
-    fun stop(): Long {
-        if (STATUS_STOPPED == status) return getRunningTime()
-        status = STATUS_STOPPED
+    fun pause(): Long {
+        if (STATUS_PAUSED == status) return getRunningTime()
+        if (STATUS_STOPPED == status) throw IllegalStateException("Chronometer is stoped!")
+        status = STATUS_PAUSED
         pauseBaseTime = SystemClock.elapsedRealtime()
         obChronometer.setEndTime(pauseBaseTime)
         return getRunningTime()
+    }
+
+    fun stop(): ObChronometer {
+        if (STATUS_STOPPED == status) return getObChronometer()
+        status = STATUS_STOPPED
+        pauseBaseTime = 0L
+        stopBaseTime = SystemClock.elapsedRealtime()
+        obChronometer.setEndTime(stopBaseTime)
+        return getObChronometer()
     }
 
     /**
@@ -57,6 +70,7 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
         obChronometer = ObChronometer()
         runningStartBaseTime = 0L
         pauseBaseTime = 0L
+        stopBaseTime = 0L
     }
 
     fun getObChronometer() = obChronometer
@@ -86,6 +100,11 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
         else -> pauseBaseTime - getObChronometer().laps.last().pausedTime
     }
 
+    fun getPauseBaseTime() = when (status) {
+        STATUS_STOPPED -> pauseBaseTime + (SystemClock.elapsedRealtime() - stopBaseTime)
+        else -> pauseBaseTime
+    }
+
     /**
      * Return the base of the last lap
      */
@@ -95,14 +114,15 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
     }
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(STATUS_STARTED, STATUS_STOPPED)
+    @IntDef(STATUS_STARTED, STATUS_PAUSED, STATUS_STOPPED)
     annotation class ChronometerStatus
 
     companion object {
+        const val STATUS_STOPPED = 2
         const val STATUS_STARTED = 1
-        const val STATUS_STOPPED = 3
+        const val STATUS_PAUSED = 3
 
-        fun getFormatedTime(timeElapsed: Long): String {
+        fun getFormattedTime(timeElapsed: Long): String {
             val df = DecimalFormat("00")
 
             val hours = (timeElapsed / (3600 * 1000)).toInt()
@@ -124,7 +144,9 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
 
             text += df.format(minutes.toLong()) + ":"
             text += df.format(seconds.toLong()) + "."
-            text += Integer.toString(milliseconds)
+            if (hours <= 0) {
+                text += Integer.toString(milliseconds)
+            }
             return text
         }
     }
