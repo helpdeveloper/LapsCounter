@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="br.com.helpdev.lapscounter.SettingsFragment"
+        android:name="br.com.helpdev.lapscounter.fragment.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

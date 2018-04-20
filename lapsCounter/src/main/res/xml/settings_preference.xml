@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <CheckBoxPreference
         android:defaultValue="@bool/pref_headset_buttons_default_value"
         android:key="@string/pref_headset_buttons_name"
         android:summary="@string/pref_headset_buttons_summary"
         android:title="@string/pref_headset_buttons_title" />
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_lap_distance_default_value"
-        android:inputType="number"
+    <br.com.helpdev.lapscounter.widget.FloatPickerPreference
+        android:defaultValue="@integer/pref_lap_distance_default_value"
         android:key="@string/pref_lap_distance_name"
         android:title="@string/pref_lap_distance_title" />
 

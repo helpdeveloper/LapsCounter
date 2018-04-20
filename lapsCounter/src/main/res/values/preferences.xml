@@ -4,7 +4,7 @@
     <bool name="pref_headset_buttons_default_value">true</bool>
 
     <string name="pref_lap_distance_name">pref_lap_distance_name</string>
-    <string name="pref_lap_distance_default_value">50</string>
+    <integer name="pref_lap_distance_default_value">50</integer>
 
     <string name="pref_headset_buttons_title">Control with the headset button</string>
     <string name="pref_headset_buttons_summary">Use the handset button to start and lap. Two clicks pause and one resume.</string>

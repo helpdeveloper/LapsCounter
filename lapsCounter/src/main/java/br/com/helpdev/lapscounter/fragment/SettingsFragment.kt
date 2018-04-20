@@ -1,8 +1,9 @@
-package br.com.helpdev.lapscounter
+package br.com.helpdev.lapscounter.fragment
 
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceFragment
+import br.com.helpdev.lapscounter.R
 
 class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeListener {
 
@@ -14,7 +15,9 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         if (null != pref) {
             pref.onPreferenceChangeListener = this
             onPreferenceChange(pref,
-                    preferenceManager.sharedPreferences.getString(pref.key, getString(R.string.pref_lap_distance_default_value))
+                    preferenceManager.sharedPreferences.getFloat(pref.key,
+                            resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat()
+                    )
             )
         }
     }
