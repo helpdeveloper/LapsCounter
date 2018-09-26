@@ -7,14 +7,14 @@
     <string name="no_records"><![CDATA[<No records>]]></string>
     <string name="title_laps">Lap LOG</string>
     <string name="sub_title_laps">Lap - Time - Accumulated - Paused</string>
-    <string name="info_distance_lap">Lap\n50m</string>
-    <string name="info_travelled">Travelled\n3025m</string>
-    <string name="info_pace">Pace\n3:00/100m</string>
+    <string name="info_distance_lap">Lap\n%.2fm</string>
+    <string name="info_travelled">Travelled\n%.2fm</string>
+    <string formatted="true" name="info_pace">Pace\n%02d:%02d/100m</string>
     <string name="title_chronometer">Chronometer</string>
     <string name="menu_settings">Settings</string>
     <string name="bt_continue">RESUME</string>
     <string name="menu_activities">Activities</string>
-    <string name="bt_save">SAVE</string>
+    <string name="bt_save">SHARE</string>
     <string name="paused_time">PAUSED TIME</string>
     <string name="num_lap">Nº %s</string>
     <string name="default_time_zero">00:00.0</string>

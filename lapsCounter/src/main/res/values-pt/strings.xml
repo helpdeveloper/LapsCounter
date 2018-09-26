@@ -7,17 +7,28 @@
     <string name="no_records"><![CDATA[<Sem registros>]]></string>
     <string name="title_laps">Registro de voltas</string>
     <string name="sub_title_laps">Volta - Tempo - Acumulado - Pausado</string>
-    <string name="info_distance_lap">Volta\n50m</string>
-    <string name="info_travelled">Percorrido\n3050m</string>
-    <string name="info_pace">Ritimo\n3:00/100m</string>
+    <string name="info_distance_lap">Volta\n%.2fm</string>
+    <string name="info_travelled">Percorrido\n%.2fm</string>
+    <string name="info_pace" formatted="true">Ritimo\n%02d:%02d/100m</string>
     <string name="title_chronometer">Cronometro</string>
     <string name="menu_settings">Configurações</string>
     <string name="bt_continue">CONTINUAR</string>
     <string name="menu_activities">Atividades</string>
-    <string name="bt_save">SALVAR</string>
+    <string name="bt_save">COMPARTILHAR</string>
     <string name="paused_time">TEMPO PAUSADO</string>
     <string name="bt_stop">PARAR</string>
     <string name="title_settings">Configurações</string>
     <string name="title_activities">Atividades</string>
+
+    <string name="text_to_share" formatted="true">
+        Tempo cronometrado: %s
+        \nTempo pausado: %s
+        \n\nDistância da volta: %s
+        \nDistância percorrida: %s
+        \nRitimo: %s
+        \n\n====Laps====
+        \n%s
+        \n=============
+    </string>
 
 </resources>

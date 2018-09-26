@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="br.com.helpdev.lapscounter.MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

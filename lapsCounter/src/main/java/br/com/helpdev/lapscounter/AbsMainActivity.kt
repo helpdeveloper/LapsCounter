@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.Menu
@@ -13,7 +14,6 @@ import android.view.View
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.adapter.LapsAdapter
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
-import br.com.helpdev.lapscounter.headset.receiver.HeadsetButtonReceiver
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.include_lap_log.*
@@ -25,6 +25,10 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
 
     private var chronometer: Chronometer? = null
     private var headsetButtonReceiver: HeadsetButtonControl? = null
+
+    companion object {
+        const val REQUEST_SETTINGS = 15
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,59 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
             refreshChronometerLog()
             createAdapter()
         }
+
+        updateInfoLap()
+    }
+
+    private fun updateInfoLap() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), 1.0f)
+
+        info_lap.text = getString(R.string.info_distance_lap, infoLapValue)
+
+        updateInfoTravelled()
+    }
+
+    private fun updateInfoTravelled() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), 1.0f)
+
+        var paceMinute = 0L
+        var paceSeconds = 0L
+        var distanceTravelled = 0.0f
+        if (null != chronometer) {
+
+            val cut = if (chronometer!!.getRunningTime() > 0 && Chronometer.STATUS_STOPPED == chronometer!!.status) {
+                0
+            } else {
+                1
+            }
+
+            distanceTravelled = (chronometer!!.getObChronometer().laps.size - cut) * infoLapValue
+
+            if (distanceTravelled > 0) {
+                var runningTime = 0L
+
+                for (x in 0 until (chronometer!!.getObChronometer().laps.size - cut)) {
+                    runningTime += chronometer!!.getObChronometer().laps[x].getRunningTime()
+                }
+
+                val pace = ((runningTime * 100) / distanceTravelled).toLong()
+
+                paceMinute = pace / 60_000L
+                paceSeconds = (pace % 60_000L) / 1000L
+            }
+        }
+
+        info_travelled.text = getString(R.string.info_travelled, distanceTravelled)
+        info_pace.text = getString(R.string.info_pace, paceMinute, paceSeconds)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (REQUEST_SETTINGS == requestCode) {
+            updateInfoLap()
+        }
     }
 
     private fun btStopPressed() {
@@ -80,6 +137,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerWidgetPause.stop()
         chronometerLogPause.stop()
         refreshBasesPaused()
+        updateInfoTravelled()
     }
 
     private fun createAdapter() {
@@ -133,6 +191,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         refreshChronometerLog()
         recycler_view.adapter.notifyDataSetChanged()
         recycler_view.smoothScrollToPosition(recycler_view.adapter.itemCount)
+        updateInfoTravelled()
     }
 
     private fun refreshBasesTotal() {
@@ -184,7 +243,17 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun btSavePressed() {
-        chronometer!!.getObChronometer()
+        chronometer!!.getObChronometer().toString()
+        val stringShare = getString(R.string.text_to_share, "1", "2", "3", "4", "5", "6")
+        shareText(getString(R.string.app_name), stringShare)
+    }
+
+    private fun shareText(subject: String, body: String) {
+        val txtIntent = Intent(android.content.Intent.ACTION_SEND)
+        txtIntent.type = "text/plain"
+        txtIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
+        txtIntent.putExtra(android.content.Intent.EXTRA_TEXT, body)
+        startActivity(Intent.createChooser(txtIntent, "SHARE"))
     }
 
     private fun btRestartPressed() {
@@ -212,6 +281,8 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerLogPause.setTextColor(resources.getColor(R.color.colorSecondaryText))
 
         recycler_view.adapter = null
+
+        updateInfoTravelled()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -221,8 +292,8 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
-            R.id.menu_activities -> startActivity(Intent(this, ActivitiesActivity::class.java))
+            R.id.menu_settings -> startActivityForResult(Intent(this, SettingsActivity::class.java), REQUEST_SETTINGS)
+//            R.id.menu_activities -> startActivity(Intent(this, ActivitiesActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }
