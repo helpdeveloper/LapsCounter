@@ -9,7 +9,7 @@
     <string name="sub_title_laps">Lap - Time - Accumulated - Paused</string>
     <string name="info_distance_lap">Lap\n%.2fm</string>
     <string name="info_travelled">Travelled\n%.2fm</string>
-    <string formatted="true" name="info_pace">Pace\n%02d:%02d/100m</string>
+    <string name="info_pace" formatted="true">Pace\n%02d:%02d/100m</string>
     <string name="title_chronometer">Chronometer</string>
     <string name="menu_settings">Settings</string>
     <string name="bt_continue">RESUME</string>
@@ -21,4 +21,20 @@
     <string name="bt_stop">STOP</string>
     <string name="title_settings">Settings</string>
     <string name="title_activities">Activities</string>
+
+    <string name="text_to_share" formatted="true">
+        Activity at: %s \n
+        \nTimed time: %s
+        \Paused time: %s
+        \nTotal time: %s
+        \n\nLap distance: %s
+        \nTravelled distance: %s
+        \nPace: %s
+        \n\n
+        ======Laps======
+        %s
+        ==================
+    </string>
+    <string name="text_lap_share" formatted="true">\Lap: %d\nTime: %s\nAccumulated: %s\nPaused: %s\nPace: %s\n</string>
+<string name="last_lap_dont_count">(Last lap does not count at full pace and distance)</string>
 </resources>

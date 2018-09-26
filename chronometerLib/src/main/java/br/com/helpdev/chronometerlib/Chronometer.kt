@@ -5,6 +5,7 @@ import android.support.annotation.IntDef
 import br.com.helpdev.chronometerlib.objects.ObChronometer
 import java.io.Serializable
 import java.text.DecimalFormat
+import java.util.*
 
 class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : Serializable {
 
@@ -16,12 +17,17 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
     private var stopBaseTime = 0L
 
     private var pauseBaseTime = 0L
+    var dateStarted: Date? = null
+        private set
 
     /**
      * Start/Resume the chronometer
      * Return the running time.
      */
     fun start(): Long {
+        if (dateStarted == null) {
+            dateStarted = Date()
+        }
         if (STATUS_STARTED == status) return getRunningTime()
         if (STATUS_STOPPED == status && stopBaseTime > 0) {
             reset()
@@ -32,12 +38,16 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
             runningStartBaseTime = SystemClock.elapsedRealtime()
             obChronometer.setStartTime(runningStartBaseTime)
         } else {
-            val pausedTime = SystemClock.elapsedRealtime() - pauseBaseTime
-            obChronometer.addPausedTime(pausedTime)
-            runningStartBaseTime += pausedTime
-            pauseBaseTime = 0L
+            addAndRestorePausedTime()
         }
         return getRunningTime()
+    }
+
+    private fun addAndRestorePausedTime() {
+        val pausedTime = SystemClock.elapsedRealtime() - pauseBaseTime
+        obChronometer.addPausedTime(pausedTime)
+        runningStartBaseTime += pausedTime
+        pauseBaseTime = 0L
     }
 
 
@@ -56,8 +66,8 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
 
     fun stop(): ObChronometer {
         if (STATUS_STOPPED == status) return getObChronometer()
+        addAndRestorePausedTime()
         status = STATUS_STOPPED
-        pauseBaseTime = 0L
         stopBaseTime = SystemClock.elapsedRealtime()
         obChronometer.setEndTime(stopBaseTime)
         return getObChronometer()
@@ -71,6 +81,7 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
         runningStartBaseTime = 0L
         pauseBaseTime = 0L
         stopBaseTime = 0L
+        dateStarted = null
     }
 
     fun getObChronometer() = obChronometer

@@ -14,11 +14,14 @@ import android.view.View
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.adapter.LapsAdapter
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
+import br.com.helpdev.lapscounter.utils.ChronoUtils
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.include_lap_log.*
 import kotlinx.android.synthetic.main.lap_log_chronometers.*
 import kotlinx.android.synthetic.main.main_toolbar.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
@@ -39,7 +42,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         bt_resume.setOnClickListener { btResumePressed() }
         bt_lap.setOnClickListener { btLapPressed() }
         bt_pause.setOnClickListener { btPausePressed() }
-        bt_save.setOnClickListener { btSavePressed() }
+        bt_save.setOnClickListener { btSharePressed() }
         bt_restart.setOnClickListener { btRestartPressed() }
         bt_stop.setOnClickListener { btStopPressed() }
 
@@ -87,39 +90,21 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun updateInfoTravelled() {
-        val sp = PreferenceManager.getDefaultSharedPreferences(this)
-        val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), 1.0f)
-
-        var paceMinute = 0L
-        var paceSeconds = 0L
-        var distanceTravelled = 0.0f
-        if (null != chronometer) {
-
-            val cut = if (chronometer!!.getRunningTime() > 0 && Chronometer.STATUS_STOPPED == chronometer!!.status) {
-                0
-            } else {
-                1
-            }
-
-            distanceTravelled = (chronometer!!.getObChronometer().laps.size - cut) * infoLapValue
-
-            if (distanceTravelled > 0) {
-                var runningTime = 0L
-
-                for (x in 0 until (chronometer!!.getObChronometer().laps.size - cut)) {
-                    runningTime += chronometer!!.getObChronometer().laps[x].getRunningTime()
-                }
-
-                val pace = ((runningTime * 100) / distanceTravelled).toLong()
-
-                paceMinute = pace / 60_000L
-                paceSeconds = (pace % 60_000L) / 1000L
-            }
+        val distance = if (null == chronometer) {
+            0f
+        } else {
+            ChronoUtils.getDistanceTravelled(this, chronometer!!)
         }
+        info_travelled.text = getString(R.string.info_travelled, distance)
 
-        info_travelled.text = getString(R.string.info_travelled, distanceTravelled)
-        info_pace.text = getString(R.string.info_pace, paceMinute, paceSeconds)
+        val pace = if (null == chronometer) {
+            Pair(0L, 0L)
+        } else {
+            ChronoUtils.getPace(this, chronometer!!)
+        }
+        info_pace.text = getString(R.string.info_pace, pace.first, pace.second)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -242,9 +227,50 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         layout_chronometer_pause.visibility = if (paused) View.VISIBLE else View.INVISIBLE
     }
 
-    private fun btSavePressed() {
-        chronometer!!.getObChronometer().toString()
-        val stringShare = getString(R.string.text_to_share, "1", "2", "3", "4", "5", "6")
+    private fun btSharePressed() {
+        chronometer!!.getObChronometer()
+
+        var pausedTime = 0L
+        var runningTime = 0L
+        val laps = StringBuilder()
+        val lapDistance = PreferenceManager.getDefaultSharedPreferences(this).getFloat(getString(R.string.pref_lap_distance_name), 100f)
+
+        for (x in 0 until chronometer!!.getObChronometer().laps.size) {
+            val lap = chronometer!!.getObChronometer().laps[x]
+            pausedTime += lap.pausedTime
+            runningTime += lap.getRunningTime()
+
+            val pace = ChronoUtils.getPace(lap.getRunningTime(), lapDistance)
+
+            laps.append(
+                    getString(R.string.text_lap_share,
+                            (x + 1),
+                            Chronometer.getFormattedTime(lap.getRunningTime()),
+                            Chronometer.getFormattedTime(lap.chronometerTime),
+                            Chronometer.getFormattedTime(lap.pausedTime),
+                            String.format("%02d:%02d", pace.first, pace.second)
+                    )
+            )
+        }
+        val pace = ChronoUtils.getPace(this, chronometer!!)
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val b = sp.getBoolean(getString(R.string.pref_count_last_lap_name), true)
+        if (!b) {
+            laps.append(getString(R.string.last_lap_dont_count)).append("\n")
+        }
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val stringShare = getString(R.string.text_to_share,
+                sdf.format(chronometer!!.dateStarted),
+                Chronometer.getFormattedTime(runningTime),
+                Chronometer.getFormattedTime(pausedTime),
+                Chronometer.getFormattedTime(runningTime + pausedTime),
+                lapDistance.toString() + "m",
+                (lapDistance * chronometer!!.getObChronometer().laps.size).toString() + "m",
+                String.format("%02d:%02d", pace.first, pace.second),
+                laps.toString())
+
         shareText(getString(R.string.app_name), stringShare)
     }
 

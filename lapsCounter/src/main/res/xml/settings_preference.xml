@@ -7,6 +7,12 @@
         android:summary="@string/pref_headset_buttons_summary"
         android:title="@string/pref_headset_buttons_title" />
 
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_count_last_lap_default_value"
+        android:key="@string/pref_count_last_lap_name"
+        android:summary="@string/pref_count_last_lap_summary"
+        android:title="@string/pref_count_last_lap_title" />
+
     <br.com.helpdev.lapscounter.widget.FloatPickerPreference
         android:defaultValue="@integer/pref_lap_distance_default_value"
         android:key="@string/pref_lap_distance_name"

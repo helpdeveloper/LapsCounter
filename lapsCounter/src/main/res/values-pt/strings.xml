@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chronometro de natação</string>
+    <string name="app_name">Cronômetro de natação</string>
     <string name="bt_start">INICIAR</string>
     <string name="bt_pause">PAUSAR</string>
     <string name="bt_restart">REINICIAR</string>
@@ -21,14 +21,18 @@
     <string name="title_activities">Atividades</string>
 
     <string name="text_to_share" formatted="true">
-        Tempo cronometrado: %s
+        Atividade em: %s \n
+        \nTempo cronometrado: %s
         \nTempo pausado: %s
+        \nTempo total: %s
         \n\nDistância da volta: %s
         \nDistância percorrida: %s
         \nRitimo: %s
-        \n\n====Laps====
-        \n%s
-        \n=============
+        \n\n
+        ======Voltas======
+        %s
+        ==================
     </string>
-
+    <string name="text_lap_share" formatted="true">\nVolta: %d\nTempo: %s\nAcumulado: %s\nPausado: %s\nRitimo: %s\n</string>
+    <string name="last_lap_dont_count">(Última volta não contabiliza no ritimo e distância total)</string>
 </resources>

@@ -27,6 +27,7 @@ class ObChronometer : Serializable {
     fun setEndTime(endTime: Long) {
         this.endTime = endTime
         laps.last().endTime = endTime
+        laps.last().chronometerTime = (endTime - startTime) - pausedTime
     }
 
     fun newLap(currentTime: Long): Boolean {
