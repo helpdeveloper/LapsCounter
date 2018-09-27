@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Swim Laps Counter</string>
+    <string name="app_name">Swimming Stopwatch</string>
     <string name="bt_start">START</string>
     <string name="bt_pause">PAUSE</string>
     <string name="bt_restart">RESTART</string>

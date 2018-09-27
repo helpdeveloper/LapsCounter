@@ -2,6 +2,7 @@ package br.com.helpdev.lapscounter.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,7 @@ class LapsAdapter(private val context: Context, private val obChronometer: ObChr
             holder.tvTotalPauseTime.text = Chronometer.getFormattedTime(obLap.pausedTime)
             holder.tvTotalPauseTime.setTextColor(Color.RED)
         } else {
-            holder.tvTotalPauseTime.setTextColor(context.resources.getColor(R.color.colorSecondaryText))
+            holder.tvTotalPauseTime.setTextColor(ContextCompat.getColor(context,R.color.colorSecondaryText))
         }
         holder.tvTotalTime.text = Chronometer.getFormattedTime(obLap.chronometerTime)
     }

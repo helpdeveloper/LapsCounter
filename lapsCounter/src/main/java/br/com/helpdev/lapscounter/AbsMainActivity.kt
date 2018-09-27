@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
 import android.preference.PreferenceManager
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.Menu
@@ -82,7 +83,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
 
     private fun updateInfoLap() {
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
-        val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), 1.0f)
+        val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
         info_lap.text = getString(R.string.info_distance_lap, infoLapValue)
 
@@ -172,7 +173,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     private fun btLapPressed() {
         chronometer!!.lap()
         chronometerLogPause.base = SystemClock.elapsedRealtime()
-        chronometerLogPause.setTextColor(resources.getColor(R.color.colorSecondaryText))
+        chronometerLogPause.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText))
         refreshChronometerLog()
         recycler_view.adapter.notifyDataSetChanged()
         recycler_view.smoothScrollToPosition(recycler_view.adapter.itemCount)
@@ -304,7 +305,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         layout_chronometer_pause.visibility = View.INVISIBLE
         chronometer_lap_log.visibility = View.GONE
         text_view_empty.visibility = View.VISIBLE
-        chronometerLogPause.setTextColor(resources.getColor(R.color.colorSecondaryText))
+        chronometerLogPause.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText))
 
         recycler_view.adapter = null
 
