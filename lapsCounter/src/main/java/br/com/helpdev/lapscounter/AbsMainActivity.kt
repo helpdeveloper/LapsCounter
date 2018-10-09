@@ -234,7 +234,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         var pausedTime = 0L
         var runningTime = 0L
         val laps = StringBuilder()
-        val lapDistance = PreferenceManager.getDefaultSharedPreferences(this).getFloat(getString(R.string.pref_lap_distance_name), 100f)
+        val lapDistance = PreferenceManager.getDefaultSharedPreferences(this).getFloat(getString(R.string.pref_lap_distance_name), resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
         for (x in 0 until chronometer!!.getObChronometer().laps.size) {
             val lap = chronometer!!.getObChronometer().laps[x]
@@ -268,7 +268,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
                 Chronometer.getFormattedTime(pausedTime),
                 Chronometer.getFormattedTime(runningTime + pausedTime),
                 lapDistance.toString() + "m",
-                (lapDistance * chronometer!!.getObChronometer().laps.size).toString() + "m",
+                ChronoUtils.getDistanceTravelled(this, chronometer!!).toString() + "m",
                 String.format("%02d:%02d", pace.first, pace.second),
                 laps.toString())
 

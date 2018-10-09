@@ -34,13 +34,13 @@ object ChronoUtils {
 
     fun getDistanceTravelled(context: Context, chronometer: Chronometer): Float {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
-        val infoLapValue = sp.getFloat(context.getString(R.string.pref_lap_distance_name), 1.0f)
+        val infoLapValue = sp.getFloat(context.getString(R.string.pref_lap_distance_name), context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
         val cut = countLastLap(context, chronometer)
         return (chronometer.getObChronometer().laps.size - cut) * infoLapValue
     }
 
-    fun countLastLap(context: Context, chronometer: Chronometer): Int {
+    private fun countLastLap(context: Context, chronometer: Chronometer): Int {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val b = sp.getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
 

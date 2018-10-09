@@ -99,6 +99,7 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
      */
     fun getCurrentBase() = when {
         0L == runningStartBaseTime -> SystemClock.elapsedRealtime()
+        stopBaseTime > 0 -> runningStartBaseTime + (SystemClock.elapsedRealtime() - stopBaseTime)
         pauseBaseTime > 0 -> runningStartBaseTime + (SystemClock.elapsedRealtime() - pauseBaseTime)
         else -> runningStartBaseTime
     }
@@ -119,9 +120,10 @@ class Chronometer(private var obChronometer: ObChronometer = ObChronometer()) : 
     /**
      * Return the base of the last lap
      */
-    fun getBaseLastLap() = when (pauseBaseTime) {
-        0L -> getObChronometer().laps.last().getBase()
-        else -> getObChronometer().laps.last().getBase() + (SystemClock.elapsedRealtime() - pauseBaseTime)
+    fun getBaseLastLap() = when {
+        stopBaseTime > 0 -> getObChronometer().laps.last().getBase() + (SystemClock.elapsedRealtime() - stopBaseTime)
+        pauseBaseTime > 0L -> getObChronometer().laps.last().getBase() + (SystemClock.elapsedRealtime() - pauseBaseTime)
+        else -> getObChronometer().laps.last().getBase()
     }
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)

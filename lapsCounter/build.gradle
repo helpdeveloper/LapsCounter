@@ -6,9 +6,9 @@ android {
     signingConfigs {
         releaseKey {
             keyAlias 'laps_counter'
-            keyPassword 'x'
+            keyPassword '48j8*eurO'
             storeFile file('/media/gbzarelli/ext_dados/projetos/LapsCounter/laps_counter.jks')
-            storePassword 'x'
+            storePassword '48j8*eurO'
         }
     }
     compileSdkVersion 27
@@ -16,8 +16,8 @@ android {
         applicationId "br.com.helpdev.lapscounter"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.0"
+        versionCode 4
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
