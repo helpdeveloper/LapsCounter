@@ -6,9 +6,9 @@ android {
     signingConfigs {
         releaseKey {
             keyAlias 'laps_counter'
-            keyPassword '48j8*eurO'
+            keyPassword 'xx'
             storeFile file('/media/gbzarelli/ext_dados/projetos/LapsCounter/laps_counter.jks')
-            storePassword '48j8*eurO'
+            storePassword 'xx'
         }
     }
     compileSdkVersion 27
