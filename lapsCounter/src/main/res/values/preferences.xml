@@ -11,9 +11,13 @@
     <integer name="pref_lap_distance_default_value">50</integer>
 
     <string name="pref_count_last_lap_name" translatable="false">pref_count_last_lap_name</string>
+    <string name="pref_audio_click_name" translatable="false">pref_audio_click_name</string>
     <string name="pref_count_last_lap_title">Count the last lap</string>
     <string name="pref_count_last_lap_summary">Add distance and pace from the last lap to STOP</string>
     <bool name="pref_count_last_lap_default_value">true</bool>
+    <bool name="pref_audio_click_value">true</bool>
 
+    <string name="pref_audio_click_summary">Enable audio on click play/pause/lap/stop</string>
+    <string name="pref_audio_click_title">Enable audio</string>
 
 </resources>

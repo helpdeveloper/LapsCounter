@@ -6,7 +6,7 @@ import android.preference.PreferenceManager
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.R
 
-object ChronoUtils {
+object ChronometerUtils {
 
     fun getPace(context: Context, chronometer: Chronometer): Pair<Long, Long> {
         val distanceTravelled = getDistanceTravelled(context, chronometer)

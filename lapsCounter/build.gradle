@@ -11,11 +11,11 @@ android {
             storePassword 'xx'
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "br.com.helpdev.lapscounter"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 4
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -30,8 +30,8 @@ android {
     flavorDimensions "default"
     productFlavors {
         swimming { applicationIdSuffix ".swimming" }
-        running { applicationIdSuffix ".running" }
-        cycling { applicationIdSuffix ".cycling" }
+//        running { applicationIdSuffix ".running" }
+//        cycling { applicationIdSuffix ".cycling" }
     }
     lintOptions {
         checkReleaseBuilds false
@@ -40,8 +40,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:design:27.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:design:28.0.0'
     implementation project(':chronometerLib')
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:support-v4:28.0.0'
 }

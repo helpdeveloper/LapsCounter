@@ -13,6 +13,12 @@
         android:summary="@string/pref_count_last_lap_summary"
         android:title="@string/pref_count_last_lap_title" />
 
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_audio_click_value"
+        android:key="@string/pref_audio_click_name"
+        android:summary="@string/pref_audio_click_summary"
+        android:title="@string/pref_audio_click_title" />
+
     <br.com.helpdev.lapscounter.widget.FloatPickerPreference
         android:defaultValue="@integer/pref_lap_distance_default_value"
         android:key="@string/pref_lap_distance_name"

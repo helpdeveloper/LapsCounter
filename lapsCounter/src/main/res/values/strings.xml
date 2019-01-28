@@ -37,4 +37,5 @@
     </string>
     <string name="text_lap_share" formatted="true">\Lap: %d\nTime: %s\nAccumulated: %s\nPaused: %s\nPace: %s\n</string>
 <string name="last_lap_dont_count">(Last lap does not count at full pace and distance)</string>
+
 </resources>
