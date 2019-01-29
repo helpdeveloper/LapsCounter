@@ -6,7 +6,7 @@ import android.preference.PreferenceManager
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.R
 
-object ChronoUtils {
+object ChronometerUtils {
 
     fun getPace(context: Context, chronometer: Chronometer): Pair<Long, Long> {
         val distanceTravelled = getDistanceTravelled(context, chronometer)
@@ -40,15 +40,12 @@ object ChronoUtils {
         return (chronometer.getObChronometer().laps.size - cut) * infoLapValue
     }
 
-    private fun countLastLap(context: Context, chronometer: Chronometer): Int {
-        val sp = PreferenceManager.getDefaultSharedPreferences(context)
-        val b = sp.getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
-
-        return if (b && chronometer.getRunningTime() > 0 && Chronometer.STATUS_STOPPED == chronometer.status) {
-            0
-        } else {
-            1
-        }
-    }
-
+    private fun countLastLap(context: Context, chronometer: Chronometer) =
+            if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
+                    && chronometer.getRunningTime() > 0
+                    && Chronometer.STATUS_STOPPED == chronometer.status) {
+                0
+            } else {
+                1
+            }
 }

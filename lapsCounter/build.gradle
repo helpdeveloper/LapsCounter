@@ -6,32 +6,32 @@ android {
     signingConfigs {
         releaseKey {
             keyAlias 'laps_counter'
-            keyPassword 'xx'
-            storeFile file('/media/gbzarelli/ext_dados/projetos/LapsCounter/laps_counter.jks')
-            storePassword 'xx'
+            keyPassword '*****'
+            storeFile file('/home/gbzarelli/laps_counter.jks')
+            storePassword '*****'
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "br.com.helpdev.lapscounter"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 4
-        versionName "1.2"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 5
+        versionName "1.3"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.releaseKey
         }
     }
+
     flavorDimensions "default"
     productFlavors {
         swimming { applicationIdSuffix ".swimming" }
-        running { applicationIdSuffix ".running" }
-        cycling { applicationIdSuffix ".cycling" }
+//        running { applicationIdSuffix ".running" }
+//        cycling { applicationIdSuffix ".cycling" }
     }
     lintOptions {
         checkReleaseBuilds false
@@ -39,9 +39,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:design:27.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.android.support:design:$rootProject.androidSupportVersion"
     implementation project(':chronometerLib')
+    implementation "com.android.support:support-v4:$rootProject.androidSupportVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
+    implementation "com.android.support:preference-v7:$rootProject.androidSupportVersion"
+    testImplementation "junit:junit:$rootProject.junitVersion"
 }

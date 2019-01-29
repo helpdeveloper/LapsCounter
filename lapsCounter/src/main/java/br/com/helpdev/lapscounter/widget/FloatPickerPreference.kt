@@ -62,10 +62,8 @@ class FloatPickerPreference(context: Context?, attrs: AttributeSet?) : DialogPre
         super.onSetInitialValue(restorePersistedValue, defaultValue)
 
         val def = (defaultValue as? Number)?.toFloat()
-                ?: if (defaultValue == null)
-                    context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat()
-                else
-                    defaultValue.toString().toFloat()
+                ?: (defaultValue?.toString()?.toFloat()
+                        ?: context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
         if (restorePersistedValue) {
             this.initialValue = getPersistedFloat(def)

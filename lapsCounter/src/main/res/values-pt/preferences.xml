@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="pref_headset_buttons_title">Controle com o botão do fone de ouvido</string>
-    <string name="pref_headset_buttons_summary">Use o botão do fone para começar e marcar volta. Dois cliques pausa e um retoma</string>
+    <string name="pref_headset_buttons_summary">Use o botão do fone para começar e marcar volta. Dois cliques pausa e um retoma (Não funciona em todos dispositivos)</string>
 
     <string name="pref_lap_distance_title">Distância da volta</string>
     <string name="pref_lap_distance_summary">Cada volta sera contabilizado %s metros</string>
 
     <string name="pref_count_last_lap_title">Contar última volta</string>
     <string name="pref_count_last_lap_summary">Somar distância e pace da última volta ao PARAR</string>
+
+    <string name="pref_audio_click_summary">Habilitar audio ao clicar em play/pause/lap/stop</string>
+    <string name="pref_audio_click_title">Habilitar audio</string>
 </resources>

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/LapsCounter.iml" filepath="$PROJECT_DIR$/.idea/LapsCounter.iml" />
       <module fileurl="file://$PROJECT_DIR$/LapsCounter.iml" filepath="$PROJECT_DIR$/LapsCounter.iml" />
       <module fileurl="file://$PROJECT_DIR$/chronometerLib/chronometerLib.iml" filepath="$PROJECT_DIR$/chronometerLib/chronometerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/lapsCounter/lapsCounter.iml" filepath="$PROJECT_DIR$/lapsCounter/lapsCounter.iml" />
