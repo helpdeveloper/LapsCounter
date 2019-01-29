@@ -27,12 +27,14 @@ import kotlinx.android.synthetic.main.lap_log_chronometers.*
 import kotlinx.android.synthetic.main.main_toolbar.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.thread
 
 
 abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
 
     private lateinit var chronometer: Chronometer
     private var headsetButtonReceiver: HeadsetButtonControl? = null
+    private var audioEnable = true
 
     companion object {
         const val REQUEST_SETTINGS = 15
@@ -43,10 +45,10 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        bt_start.setOnClickListener { btStartPressed() }
-        bt_resume.setOnClickListener { btResumePressed() }
-        bt_lap.setOnClickListener { btLapPressed() }
-        bt_pause.setOnClickListener { btPausePressed() }
+        bt_start.setOnClickListener { btStartPressed().run { alarmAsync(R.raw.beep) } }
+        bt_resume.setOnClickListener { btResumePressed().run { alarmAsync(R.raw.beep) } }
+        bt_lap.setOnClickListener { btLapPressed().run { alarmAsync(R.raw.beep_2) } }
+        bt_pause.setOnClickListener { btPausePressed().run { alarmAsync(R.raw.beep) } }
         bt_save.setOnClickListener { btSharePressed() }
         bt_restart.setOnClickListener { btRestartPressed() }
         bt_stop.setOnClickListener { btStopPressed() }
@@ -57,6 +59,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
             chronometer = savedInstanceState.getSerializable("chronometer") as Chronometer
             buttons_frame_2.visibility = savedInstanceState.getInt("buttons_frame_2")
             buttons_lay_restart_save.visibility = savedInstanceState.getInt("buttons_lay_restart_save")
+            audioEnable = savedInstanceState.getBoolean("audioEnable")
             bt_start.visibility = savedInstanceState.getInt("bt_start")
             bt_lap.visibility = savedInstanceState.getInt("bt_lap")
             bt_pause.visibility = savedInstanceState.getInt("bt_pause")
@@ -88,7 +91,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     private fun updateParameters() {
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
-
+        audioEnable = sp.getBoolean(getString(R.string.pref_audio_click_name), resources.getBoolean(R.bool.pref_audio_click_value))
         info_lap.text = getString(R.string.info_distance_lap, infoLapValue)
 
         updateInfoTravelled()
@@ -110,17 +113,6 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         }
     }
 
-    private fun btStopPressed() {
-        bt_stop.visibility = View.GONE
-        bt_resume.visibility = View.GONE
-        layout_chronometer_pause.visibility = View.GONE
-        buttons_lay_restart_save.visibility = View.VISIBLE
-        chronometer.stop()
-        chronometerWidgetPause.stop()
-        chronometerLogPause.stop()
-        refreshBasesPaused()
-        updateInfoTravelled()
-    }
 
     private fun createAdapter() {
         recycler_view.adapter = LapsAdapter(this, chronometer.getObChronometer())
@@ -138,7 +130,20 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         outState.putInt("layout_chronometer_pause", layout_chronometer_pause.visibility)
         outState.putInt("chronometer_lap_log", chronometer_lap_log.visibility)
         outState.putInt("text_view_empty", text_view_empty.visibility)
+        outState.putBoolean("audioEnable", audioEnable)
         super.onSaveInstanceState(outState)
+    }
+
+    private fun btStopPressed() {
+        bt_stop.visibility = View.GONE
+        bt_resume.visibility = View.GONE
+        layout_chronometer_pause.visibility = View.GONE
+        buttons_lay_restart_save.visibility = View.VISIBLE
+        chronometer.stop()
+        chronometerWidgetPause.stop()
+        chronometerLogPause.stop()
+        refreshBasesPaused()
+        updateInfoTravelled()
     }
 
     private fun btStartPressed() {
@@ -164,25 +169,15 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         refreshBasesTotal()
         startChronometersWidget()
         refreshChronometerLog()
-        x(R.raw.alarm_1)
     }
 
-    private fun x(rawId:Int) {
-        MediaPlayer.create(this, rawId).apply {
-            if (Build.VERSION.SDK_INT >= 21) {
-                setAudioAttributes(AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .build())
-            } else {
-                setAudioStreamType(AudioManager.STREAM_ALARM)
-            }
-            try {
-                start()
-            } catch (e: Throwable) {
-                e.printStackTrace()
-            }
-        }
+    private fun btPausePressed() {
+        chronometer.pause()
+        chronometerWidget.stop()
+        chronometerLogWidget.stop()
+        chronometerLogCurrent.stop()
+        startChronometersPause()
+        changeLayoutPauseResume(true)
     }
 
     private fun btLapPressed() {
@@ -198,7 +193,24 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
             }
         }
         updateInfoTravelled()
-        x(R.raw.alarm_1)
+    }
+
+
+    private fun alarmAsync(rawId: Int) {
+        if (!audioEnable) return
+        thread {
+            MediaPlayer.create(this, rawId).apply {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    setAudioAttributes(AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .build())
+                } else {
+                    setAudioStreamType(AudioManager.STREAM_ALARM)
+                }
+
+            }.start()
+        }
     }
 
     private fun refreshBasesTotal() {
@@ -222,15 +234,6 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerLogCurrent.base = chronometer.getBaseLastLap()
     }
 
-
-    private fun btPausePressed() {
-        chronometer.pause()
-        chronometerWidget.stop()
-        chronometerLogWidget.stop()
-        chronometerLogCurrent.stop()
-        startChronometersPause()
-        changeLayoutPauseResume(true)
-    }
 
     private fun startChronometersPause() {
         refreshBasesPaused()
@@ -348,6 +351,10 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
 
     override fun onResume() {
         super.onResume()
+        configureHeadsetButtons()
+    }
+
+    private fun configureHeadsetButtons() {
         if (getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.pref_headset_buttons_name),
                         resources.getBoolean(R.bool.pref_headset_buttons_default_value))) {
             if (null == headsetButtonReceiver) headsetButtonReceiver = HeadsetButtonControl()

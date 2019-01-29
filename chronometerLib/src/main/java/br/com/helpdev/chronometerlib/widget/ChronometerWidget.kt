@@ -127,9 +127,7 @@ class ChronometerWidget @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     internal fun dispatchChronometerTick() {
-        if (onChronometerTickListener != null) {
-            onChronometerTickListener!!.onChronometerTick(this)
-        }
+        onChronometerTickListener?.onChronometerTick(this)
     }
 
     companion object {

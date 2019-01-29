@@ -15,42 +15,37 @@
         android:textSize="@dimen/size_text_highlight"
         android:textStyle="bold" />
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <br.com.helpdev.chronometerlib.widget.ChronometerWidget
+            android:id="@+id/chronometerLogCurrent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_text_highlight"
+            android:textStyle="bold" />
 
-            <br.com.helpdev.chronometerlib.widget.ChronometerWidget
-                android:id="@+id/chronometerLogCurrent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_text_highlight"
-                android:textStyle="bold" />
+        <br.com.helpdev.chronometerlib.widget.ChronometerWidget
+            android:id="@+id/chronometerLogWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_text_highlight"
+            android:textStyle="bold" />
 
-            <br.com.helpdev.chronometerlib.widget.ChronometerWidget
-                android:id="@+id/chronometerLogWidget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_text_highlight"
-                android:textStyle="bold" />
-
-            <br.com.helpdev.chronometerlib.widget.ChronometerWidget
-                android:id="@+id/chronometerLogPause"
-                style="@style/Base.TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorSecondaryText" />
-        </LinearLayout>
-
+        <br.com.helpdev.chronometerlib.widget.ChronometerWidget
+            android:id="@+id/chronometerLogPause"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorSecondaryText" />
     </LinearLayout>
+
 
 </LinearLayout>

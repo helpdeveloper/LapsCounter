@@ -6,27 +6,27 @@ android {
     signingConfigs {
         releaseKey {
             keyAlias 'laps_counter'
-            keyPassword 'xx'
-            storeFile file('/media/gbzarelli/ext_dados/projetos/LapsCounter/laps_counter.jks')
-            storePassword 'xx'
+            keyPassword '48j8*eurO'
+            storeFile file('/home/gbzarelli/laps_counter.jks')
+            storePassword '48j8*eurO'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "br.com.helpdev.lapscounter"
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 4
-        versionName "1.2"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 5
+        versionName "1.3"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.releaseKey
         }
     }
+
     flavorDimensions "default"
     productFlavors {
         swimming { applicationIdSuffix ".swimming" }
@@ -39,10 +39,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:design:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.android.support:design:$rootProject.androidSupportVersion"
     implementation project(':chronometerLib')
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation "com.android.support:support-v4:$rootProject.androidSupportVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
+    implementation "com.android.support:preference-v7:$rootProject.androidSupportVersion"
+    testImplementation "junit:junit:$rootProject.junitVersion"
 }
