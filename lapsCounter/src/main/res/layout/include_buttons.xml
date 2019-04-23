@@ -52,24 +52,37 @@
             android:id="@+id/buttons_lay_restart_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <Button
-                android:id="@+id/bt_restart"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height_button"
-                android:layout_weight="1"
-                android:text="@string/bt_restart"
-                android:theme="@style/AppTheme.Button.Red" />
-
-            <Button
                 android:id="@+id/bt_save"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/height_button"
-                android:layout_weight="1"
                 android:text="@string/bt_save"
                 android:theme="@style/AppTheme.Button.Dark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bt_restart"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_weight="1"
+                    android:text="@string/bt_restart"
+                    android:theme="@style/AppTheme.Button.Red" />
+
+                <Button
+                    android:id="@+id/bt_share"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_weight="1"
+                    android:text="@string/bt_share"
+                    android:theme="@style/AppTheme.Button.Dark" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button

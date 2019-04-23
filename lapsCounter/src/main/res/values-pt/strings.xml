@@ -14,9 +14,10 @@
     <string name="menu_settings">Configurações</string>
     <string name="bt_continue">CONTINUAR</string>
     <string name="menu_activities">Atividades</string>
-    <string name="bt_save">COMPARTILHAR</string>
+    <string name="bt_share">COMPARTILHAR</string>
     <string name="paused_time">TEMPO PAUSADO</string>
     <string name="bt_stop">PARAR</string>
+    <string name="bt_save">SALVAR</string>
     <string name="title_settings">Configurações</string>
     <string name="title_activities">Atividades</string>
 
@@ -35,4 +36,5 @@
     </string>
     <string name="text_lap_share" formatted="true">\nVolta: %d\nTempo: %s\nAcumulado: %s\nPausado: %s\nRitimo: %s\n</string>
     <string name="last_lap_dont_count">(Última volta não contabiliza no ritimo e distância total)</string>
+
 </resources>

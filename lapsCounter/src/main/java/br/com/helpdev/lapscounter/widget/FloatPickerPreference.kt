@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.NumberPicker
 import br.com.helpdev.lapscounter.R
-import java.util.regex.Pattern
 import android.content.DialogInterface
 
 
