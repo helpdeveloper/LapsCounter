@@ -13,7 +13,8 @@ object ChronometerShareUtils {
         var pausedTime = 0L
         var runningTime = 0L
         val laps = StringBuilder()
-        val lapDistance = PreferenceManager.getDefaultSharedPreferences(context).getFloat(context.getString(R.string.pref_lap_distance_name), context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
+        val sp = PreferenceManager.getDefaultSharedPreferences(context)
+        val lapDistance = sp.getFloat(context.getString(R.string.pref_lap_distance_name), context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
         for (x in 0 until chronometer.getObChronometer().laps.size) {
             val lap = chronometer.getObChronometer().laps[x]
@@ -34,9 +35,8 @@ object ChronometerShareUtils {
         }
         val pace = ChronometerUtils.getPace(context, chronometer)
 
-        val sp = PreferenceManager.getDefaultSharedPreferences(context)
-        val b = sp.getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
-        if (!b) {
+        val countLastLap = sp.getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
+        if (!countLastLap) {
             laps.append(context.getString(R.string.last_lap_dont_count)).append("\n")
         }
 

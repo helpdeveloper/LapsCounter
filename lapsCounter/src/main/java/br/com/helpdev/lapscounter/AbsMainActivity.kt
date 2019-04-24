@@ -1,19 +1,21 @@
 package br.com.helpdev.lapscounter
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.adapter.LapsAdapter
+import br.com.helpdev.lapscounter.dialog.SaveActivityDialog
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
 import br.com.helpdev.lapscounter.utils.AlarmUtils.alarmAsync
 import br.com.helpdev.lapscounter.utils.ChronometerUtils
@@ -24,7 +26,6 @@ import kotlinx.android.synthetic.main.include_lap_log.*
 import kotlinx.android.synthetic.main.lap_log_chronometers.*
 import kotlinx.android.synthetic.main.main_toolbar.*
 
-
 abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
     companion object {
         private const val REQUEST_SETTINGS = 15
@@ -33,6 +34,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     private lateinit var chronometer: Chronometer
     private var headsetButtonReceiver: HeadsetButtonControl? = null
     private var audioEnable = true
+    private var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,22 +64,26 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
 
     private fun onRestoreChronometer() {
         refreshBasesTotal()
-        checkChronometerStatus()
+        checkAndPerformChronometerStatus()
         refreshChronometerLog()
         createAdapter()
     }
 
-    private fun checkChronometerStatus() {
+    private fun checkAndPerformChronometerStatus() {
         when {
             Chronometer.STATUS_STARTED == chronometer.status -> {
                 startChronometersWidget()
-                if ((SystemClock.elapsedRealtime() - chronometer.getLastLapBasePause()) > 1) {
-                    chronometerLogPause.setTextColor(Color.RED)
-                    chronometerLogPause.base = chronometer.getLastLapBasePause()
-                }
+                checkHavePauseTime()
             }
-            Chronometer.STATUS_PAUSED == chronometer.status -> startChronometersPause()
+            Chronometer.STATUS_PAUSED == chronometer.status -> startChronometersPaused()
             Chronometer.STATUS_STOPPED == chronometer.status -> refreshBasesPaused()
+        }
+    }
+
+    private fun checkHavePauseTime() {
+        if ((SystemClock.elapsedRealtime() - chronometer.getLastLapBasePause()) > 1) {
+            chronometerLogPause.setTextColor(Color.RED)
+            chronometerLogPause.base = chronometer.getLastLapBasePause()
         }
     }
 
@@ -180,7 +186,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerWidget.stop()
         chronometerLogWidget.stop()
         chronometerLogCurrent.stop()
-        startChronometersPause()
+        startChronometersPaused()
         changeLayoutPauseResume(true)
     }
 
@@ -189,19 +195,16 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerLogPause.base = SystemClock.elapsedRealtime()
         chronometerLogPause.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText))
         refreshChronometerLog()
-        smoothScrollToPosition()
+        recycler_view.smoothScrollToPosition()
         updateInfoTravelled()
     }
 
-    private fun smoothScrollToPosition() {
-        recycler_view.also { recycler ->
-            recycler.adapter?.apply {
-                notifyDataSetChanged()
-                recycler.smoothScrollToPosition(itemCount)
-            }
+    private fun RecyclerView.smoothScrollToPosition() {
+        adapter?.let {
+            it.notifyDataSetChanged()
+            smoothScrollToPosition(it.itemCount)
         }
     }
-
 
     private fun alarm(rawId: Int) {
         if (!audioEnable) return
@@ -229,7 +232,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerLogCurrent.base = chronometer.getBaseLastLap()
     }
 
-    private fun startChronometersPause() {
+    private fun startChronometersPaused() {
         refreshBasesPaused()
         chronometerLogPause.setTextColor(Color.RED)
         chronometerWidgetPause.start()
@@ -246,7 +249,13 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun btSavePressed() {
-        //TODO - SAVE
+        showDialogSaveActivity()
+    }
+
+    private fun showDialogSaveActivity() {
+        SaveActivityDialog(this).show { name, description ->
+            //TODO - Save DB
+        }
     }
 
     private fun btSharePressed() {
@@ -254,6 +263,12 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun btRestartPressed() {
+        resetChronometerWidgets()
+        resetVisibleViews()
+        updateInfoTravelled()
+    }
+
+    private fun resetChronometerWidgets() {
         chronometer.reset()
 
         chronometerWidget.base = SystemClock.elapsedRealtime()
@@ -265,7 +280,9 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometerWidget.stop()
         chronometerLogWidget.stop()
         chronometerLogPause.stop()
+    }
 
+    private fun resetVisibleViews() {
         buttons_frame_2.visibility = View.GONE
         bt_start.visibility = View.VISIBLE
         buttons_lay_restart_save.visibility = View.GONE
@@ -276,11 +293,9 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         chronometer_lap_log.visibility = View.GONE
         text_view_empty.visibility = View.VISIBLE
         chronometerLogPause.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText))
-
         recycler_view.adapter = null
-
-        updateInfoTravelled()
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -301,15 +316,19 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun configureHeadsetButtons() {
-        if (getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.pref_headset_buttons_name),
-                        resources.getBoolean(R.bool.pref_headset_buttons_default_value))) {
+        if (headsetButtonsEnable()) {
             if (null == headsetButtonReceiver) headsetButtonReceiver = HeadsetButtonControl()
-            headsetButtonReceiver?.registerHeadsetButton(this, this)
+            headsetButtonReceiver!!.registerHeadsetButton(this, this)
         }
     }
 
+    private fun headsetButtonsEnable() = PreferenceManager.getDefaultSharedPreferences(this)
+            .getBoolean(getString(R.string.pref_headset_buttons_name), resources.getBoolean(R.bool.pref_headset_buttons_default_value))
+
+
     override fun onPause() {
         headsetButtonReceiver?.unregisterHeadsetButton(this)
+        dialog?.dismiss()
         super.onPause()
     }
 
@@ -335,7 +354,16 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     override fun onBackPressed() {
-        super.finish()
+        showDialogExit()
+    }
+
+    private fun showDialogExit() {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.app_name)
+            setMessage(R.string.confirm_exit)
+            setPositiveButton(android.R.string.ok) { _, _ -> super.finish() }
+            setNegativeButton(android.R.string.cancel, null)
+        }.let { dialog = it.create(); dialog!! }.let { it.show() }
     }
 
 }

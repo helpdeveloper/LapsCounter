@@ -38,5 +38,10 @@
     <string name="text_lap_share" formatted="true">\Lap: %d\nTime: %s\nAccumulated: %s\nPaused: %s\nPace: %s\n</string>
 <string name="last_lap_dont_count">(Last lap does not count at full pace and distance)</string>
     <string name="bt_save">SAVE</string>
+    <string name="confirm_exit">Confirm exit?</string>
+    <string name="save_activity_message">Your activity info</string>
+    <string name="hint_name_activity">Activity name</string>
+    <string name="hint_description_activity">Activity description</string>
+    <string name="error_empty_name">Empty name is not allow</string>
 
 </resources>

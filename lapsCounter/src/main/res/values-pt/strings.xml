@@ -36,5 +36,10 @@
     </string>
     <string name="text_lap_share" formatted="true">\nVolta: %d\nTempo: %s\nAcumulado: %s\nPausado: %s\nRitimo: %s\n</string>
     <string name="last_lap_dont_count">(Última volta não contabiliza no ritimo e distância total)</string>
+    <string name="confirm_exit">Confirma sair?</string>
+    <string name="save_activity_message">Suas informações da atividade</string>
+    <string name="hint_name_activity">Nome da atividade</string>
+    <string name="hint_description_activity">Descrição da atividade</string>
+    <string name="error_empty_name">Empty name is not allow</string>
 
 </resources>
