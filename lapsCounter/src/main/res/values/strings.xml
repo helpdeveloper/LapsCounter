@@ -43,5 +43,6 @@
     <string name="hint_name_activity">Activity name</string>
     <string name="hint_description_activity">Activity description</string>
     <string name="error_empty_name">Empty name is not allow</string>
+    <string name="activity_saved">Activity saved</string>
 
 </resources>

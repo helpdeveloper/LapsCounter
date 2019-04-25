@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
 import android.preference.PreferenceManager
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -17,9 +18,9 @@ import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.adapter.LapsAdapter
 import br.com.helpdev.lapscounter.dialog.SaveActivityDialog
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
+import br.com.helpdev.lapscounter.model.ActivityService
+import br.com.helpdev.lapscounter.utils.*
 import br.com.helpdev.lapscounter.utils.AlarmUtils.alarmAsync
-import br.com.helpdev.lapscounter.utils.ChronometerUtils
-import br.com.helpdev.lapscounter.utils.ChronometerShareUtils
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.include_lap_log.*
@@ -35,6 +36,9 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     private var headsetButtonReceiver: HeadsetButtonControl? = null
     private var audioEnable = true
     private var dialog: AlertDialog? = null
+    private var saveActivityDialog: SaveActivityDialog? = null
+    private var countLastLap: Boolean = true
+    private var lapDistance: Float = 50.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +94,6 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     private fun restoreVisibilities(savedInstanceState: Bundle) {
         buttons_frame_2.visibility = savedInstanceState.getInt("buttons_frame_2")
         buttons_lay_restart_save.visibility = savedInstanceState.getInt("buttons_lay_restart_save")
-        audioEnable = savedInstanceState.getBoolean("audioEnable")
         bt_start.visibility = savedInstanceState.getInt("bt_start")
         bt_lap.visibility = savedInstanceState.getInt("bt_lap")
         bt_pause.visibility = savedInstanceState.getInt("bt_pause")
@@ -102,17 +105,18 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun updateParameters() {
-        val sp = PreferenceManager.getDefaultSharedPreferences(this)
-        val infoLapValue = sp.getFloat(getString(R.string.pref_lap_distance_name), resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
-        audioEnable = sp.getBoolean(getString(R.string.pref_audio_click_name), resources.getBoolean(R.bool.pref_audio_click_value))
-        info_lap.text = getString(R.string.info_distance_lap, infoLapValue)
+        lapDistance = getLapDistance(this)
+        countLastLap = countLastLap(this)
+        audioEnable = isAudioEnable(this)
+        info_lap.text = getString(R.string.info_distance_lap, lapDistance)
         updateInfoTravelled()
     }
 
+
     private fun updateInfoTravelled() {
-        val distance = ChronometerUtils.getDistanceTravelled(this, chronometer)
+        val distance = ChronometerUtils.getDistanceTravelled(chronometer, lapDistance, countLastLap)
         info_travelled.text = getString(R.string.info_travelled, distance)
-        val pace = ChronometerUtils.getPace(this, chronometer)
+        val pace = ChronometerUtils.getPace(chronometer, lapDistance, countLastLap)
         info_pace.text = getString(R.string.info_pace, pace.first, pace.second)
     }
 
@@ -140,7 +144,6 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         outState.putInt("layout_chronometer_pause", layout_chronometer_pause.visibility)
         outState.putInt("chronometer_lap_log", chronometer_lap_log.visibility)
         outState.putInt("text_view_empty", text_view_empty.visibility)
-        outState.putBoolean("audioEnable", audioEnable)
         super.onSaveInstanceState(outState)
     }
 
@@ -253,13 +256,21 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     }
 
     private fun showDialogSaveActivity() {
-        SaveActivityDialog(this).show { name, description ->
-            //TODO - Save DB
+        SaveActivityDialog(this).also {
+            saveActivityDialog = it
+        }.show { name, description ->
+            saveActivity(name, description)
         }
     }
 
+    private fun saveActivity(name: String, description: String) {
+        ActivityService().saveActivity(name, description, chronometer, lapDistance)
+        Snackbar.make(recycler_view, R.string.activity_saved, Snackbar.LENGTH_LONG).show()
+        btRestartPressed()
+    }
+
     private fun btSharePressed() {
-        ChronometerShareUtils.shareText(this, chronometer)
+        ChronometerShareUtils.shareText(this, chronometer, lapDistance, countLastLap)
     }
 
     private fun btRestartPressed() {
@@ -329,6 +340,7 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
     override fun onPause() {
         headsetButtonReceiver?.unregisterHeadsetButton(this)
         dialog?.dismiss()
+        saveActivityDialog?.dismiss()
         super.onPause()
     }
 

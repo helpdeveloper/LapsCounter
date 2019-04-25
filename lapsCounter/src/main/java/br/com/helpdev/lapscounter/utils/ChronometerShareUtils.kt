@@ -2,19 +2,16 @@ package br.com.helpdev.lapscounter.utils
 
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
 import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.lapscounter.R
 import java.text.SimpleDateFormat
 import java.util.*
 
 object ChronometerShareUtils {
-    fun shareText(context: Context, chronometer: Chronometer) {
+    fun shareText(context: Context, chronometer: Chronometer, lapDistance: Float, countLastLap: Boolean) {
         var pausedTime = 0L
         var runningTime = 0L
         val laps = StringBuilder()
-        val sp = PreferenceManager.getDefaultSharedPreferences(context)
-        val lapDistance = sp.getFloat(context.getString(R.string.pref_lap_distance_name), context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
         for (x in 0 until chronometer.getObChronometer().laps.size) {
             val lap = chronometer.getObChronometer().laps[x]
@@ -33,9 +30,8 @@ object ChronometerShareUtils {
                     )
             )
         }
-        val pace = ChronometerUtils.getPace(context, chronometer)
+        val pace = ChronometerUtils.getPace(chronometer, lapDistance, countLastLap)
 
-        val countLastLap = sp.getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
         if (!countLastLap) {
             laps.append(context.getString(R.string.last_lap_dont_count)).append("\n")
         }
@@ -47,7 +43,7 @@ object ChronometerShareUtils {
                 Chronometer.getFormattedTime(pausedTime),
                 Chronometer.getFormattedTime(runningTime + pausedTime),
                 lapDistance.toString() + "m",
-                ChronometerUtils.getDistanceTravelled(context, chronometer).toString() + "m",
+                ChronometerUtils.getDistanceTravelled(chronometer, lapDistance, countLastLap).toString() + "m",
                 String.format("%02d:%02d", pace.first, pace.second),
                 laps.toString())
 
