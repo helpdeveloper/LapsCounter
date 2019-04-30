@@ -1,6 +1,7 @@
 package br.com.helpdev.lapscounter
 
 import android.app.Application
+import com.google.android.gms.ads.MobileAds
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -8,7 +9,12 @@ class LapsCounterApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        initAds()
         initRealm()
+    }
+
+    private fun initAds() {
+        MobileAds.initialize(this, getString(R.string.admob_app_id))
     }
 
     private fun initRealm() {

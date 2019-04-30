@@ -2,6 +2,7 @@ package br.com.helpdev.lapscounter.utils
 
 import android.content.Context
 import android.preference.PreferenceManager
+import br.com.helpdev.lapscounter.ActivitiesActivity
 import br.com.helpdev.lapscounter.R
 
 fun getLapDistance(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
@@ -15,3 +16,11 @@ fun isAudioEnable(context: Context) = PreferenceManager.getDefaultSharedPreferen
 
 fun countLastLap(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
         .getBoolean(context.getString(R.string.pref_count_last_lap_name), true)
+
+fun isFirstOpen(context: Context, classe: Class<*>) =
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(classe.simpleName, true)
+
+fun setFirstOpen(context: Context, classe: Class<*>) {
+    PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(classe.simpleName, false).apply()
+}
