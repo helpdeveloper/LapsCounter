@@ -1,7 +1,7 @@
 package br.com.helpdev.chronometerlib
 
 import android.os.SystemClock
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 import br.com.helpdev.chronometerlib.objects.ObChronometer
 import java.io.Serializable
 import java.text.DecimalFormat

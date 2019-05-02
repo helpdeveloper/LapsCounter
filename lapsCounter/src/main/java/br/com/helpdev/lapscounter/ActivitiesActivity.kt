@@ -1,8 +1,8 @@
 package br.com.helpdev.lapscounter
 
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import br.com.helpdev.lapscounter.ads.InterstitialActivity
 import br.com.helpdev.lapscounter.ads.InterstitialAd
 import br.com.helpdev.lapscounter.utils.isFirstOpen

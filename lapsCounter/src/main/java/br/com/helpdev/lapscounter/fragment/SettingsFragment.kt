@@ -1,14 +1,14 @@
 package br.com.helpdev.lapscounter.fragment
 
 import android.os.Bundle
-import android.preference.Preference
-import android.preference.PreferenceFragment
+import androidx.preference.DialogPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragment
 import br.com.helpdev.lapscounter.R
 
 class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings_preference)
 
         val pref = preferenceManager.findPreference(getString(R.string.pref_lap_distance_name))
@@ -27,6 +27,11 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.pref_lap_distance_name) -> preference.summary = getString(R.string.pref_lap_distance_summary, newValue)
         }
         return true
+    }
+
+    override fun onDisplayPreferenceDialog(preference: Preference?) {
+        super.onDisplayPreferenceDialog(preference)
+
     }
 
 }

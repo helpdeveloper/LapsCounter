@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
-    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation "junit:junit:$rootProject.junitVersion"
 }

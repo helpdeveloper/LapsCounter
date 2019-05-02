@@ -9,7 +9,6 @@ fun getLapDistance(context: Context) = PreferenceManager.getDefaultSharedPrefere
         .getFloat(context.getString(R.string.pref_lap_distance_name),
                 context.resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat())
 
-
 fun isAudioEnable(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
         .getBoolean(context.getString(R.string.pref_audio_click_name),
                 context.resources.getBoolean(R.bool.pref_audio_click_value))
