@@ -11,7 +11,7 @@ object AlarmUtils {
     fun alarmAsync(context: Context, rawId: Int) {
         thread {
             MediaPlayer.create(context, rawId).apply {
-                if (Build.VERSION.SDK_INT >= 21) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     setAudioAttributes(AudioAttributes.Builder()
                             .setUsage(AudioAttributes.USAGE_ALARM)
                             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
