@@ -2,7 +2,6 @@ package br.com.helpdev.lapscounter.utils
 
 import android.content.Context
 import android.preference.PreferenceManager
-import br.com.helpdev.lapscounter.ActivitiesActivity
 import br.com.helpdev.lapscounter.R
 
 fun getLapDistance(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
@@ -12,6 +11,9 @@ fun getLapDistance(context: Context) = PreferenceManager.getDefaultSharedPrefere
 fun isAudioEnable(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
         .getBoolean(context.getString(R.string.pref_audio_click_name),
                 context.resources.getBoolean(R.bool.pref_audio_click_value))
+
+fun getStringLapDistance(context: Context): String =
+        context.getString(R.string.info_distance_lap, getLapDistance(context))
 
 fun countLastLap(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
         .getBoolean(context.getString(R.string.pref_count_last_lap_name), true)

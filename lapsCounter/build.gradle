@@ -53,4 +53,5 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     implementation "com.google.android.gms:play-services-ads:$rootProject.playServicesAdsVersion"
     implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }

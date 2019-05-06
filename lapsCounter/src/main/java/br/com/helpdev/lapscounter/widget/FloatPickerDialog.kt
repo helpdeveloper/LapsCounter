@@ -18,7 +18,7 @@ class FloatPickerDialog(context: Context, private val value: Float) : AlertDialo
         val view = LayoutInflater.from(context).inflate(R.layout.widget_float_picker_preference, null)
         setView(view)
         onBindDialogView(view)
-        setMessage("Entre com a distância da volta")
+        setMessage(context.getString(R.string.hint_input_lap_distance))
         setButton(DialogInterface.BUTTON_POSITIVE, context.getString(android.R.string.ok)) { _, _ ->
             val newValue = String.format("%d.%d", pk1?.value ?: 0, pk2?.value ?: 0).toFloat()
             func(newValue)
