@@ -1,4 +1,4 @@
-package br.com.helpdev.lapscounter.fragment
+package br.com.helpdev.lapscounter.ui.fragment
 
 import android.os.Bundle
 import androidx.preference.Preference

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
-        android:name=".LapsCounterApplication"
+        android:name=".AppApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +21,7 @@
             android:value="@string/admob_app_id" />
 
         <activity
-            android:name="br.com.helpdev.lapscounter.MainActivity"
+            android:name="br.com.helpdev.lapscounter.ChronometerActivityImpl"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -31,15 +31,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_settings"
-            android:parentActivityName="br.com.helpdev.lapscounter.MainActivity"
+            android:parentActivityName="br.com.helpdev.lapscounter.ChronometerActivityImpl"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ActivitiesActivity"
+            android:name=".ui.ActivitiesActivity"
             android:label="@string/title_activities"
-            android:parentActivityName="br.com.helpdev.lapscounter.MainActivity"
+            android:parentActivityName="br.com.helpdev.lapscounter.ChronometerActivityImpl"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver

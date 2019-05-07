@@ -1,12 +1,8 @@
-package br.com.helpdev.lapscounter
+package br.com.helpdev.lapscounter.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import br.com.helpdev.lapscounter.ads.InterstitialActivity
-import br.com.helpdev.lapscounter.ads.InterstitialAd
-import br.com.helpdev.lapscounter.utils.isFirstOpen
-import br.com.helpdev.lapscounter.utils.setFirstOpen
+import br.com.helpdev.lapscounter.R
+import br.com.helpdev.lapscounter.ui.ads.InterstitialActivity
 import kotlinx.android.synthetic.main.activity_activities.*
 
 class ActivitiesActivity : InterstitialActivity() {

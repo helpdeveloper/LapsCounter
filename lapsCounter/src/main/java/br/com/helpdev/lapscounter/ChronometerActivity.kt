@@ -15,13 +15,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import br.com.helpdev.chronometerlib.Chronometer
-import br.com.helpdev.lapscounter.adapter.LapsAdapter
-import br.com.helpdev.lapscounter.dialog.SaveActivityDialog
 import br.com.helpdev.lapscounter.headset.HeadsetButtonControl
-import br.com.helpdev.lapscounter.injector.ActivityInjector
+import br.com.helpdev.lapscounter.injector.InjectorUtils
+import br.com.helpdev.lapscounter.ui.ActivitiesActivity
+import br.com.helpdev.lapscounter.ui.SettingsActivity
+import br.com.helpdev.lapscounter.ui.adapter.LapsAdapter
+import br.com.helpdev.lapscounter.ui.dialog.SaveActivityDialog
+import br.com.helpdev.lapscounter.ui.viewmodel.ChronometerViewModel
 import br.com.helpdev.lapscounter.utils.*
 import br.com.helpdev.lapscounter.utils.AlarmUtils.alarmAsync
-import br.com.helpdev.lapscounter.viewmodel.ActivityViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
@@ -29,12 +31,12 @@ import kotlinx.android.synthetic.main.include_lap_log.*
 import kotlinx.android.synthetic.main.lap_log_chronometers.*
 import kotlinx.android.synthetic.main.main_toolbar.*
 
-abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
+abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
     companion object {
         private const val REQUEST_SETTINGS = 15
     }
 
-    private lateinit var viewModel: ActivityViewModel
+    private lateinit var viewModel: ChronometerViewModel
 
     private var headsetButtonReceiver: HeadsetButtonControl? = null
 
@@ -51,8 +53,8 @@ abstract class AbsMainActivity : AppCompatActivity(), HeadsetButtonControl.Heads
         setSupportActionBar(toolbar)
         configureOnClicks()
 
-        viewModel = ViewModelProviders.of(this, ActivityInjector.provideActivityViewModelFactory())
-                .get(ActivityViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
+                .get(ChronometerViewModel::class.java)
 
         if (null != savedInstanceState) {
             restoreInstanceVisibilityViews(savedInstanceState)

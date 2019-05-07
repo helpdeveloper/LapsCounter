@@ -1,7 +1,8 @@
-package br.com.helpdev.lapscounter
+package br.com.helpdev.lapscounter.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import br.com.helpdev.lapscounter.R
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {

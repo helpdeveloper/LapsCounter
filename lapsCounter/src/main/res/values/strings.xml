@@ -46,4 +46,5 @@
     <string name="activity_saved">Activity saved</string>
     <string name="first_show_ad">Hello,\n\n First of all we apologize for the inconvenience, but for the Developer to invoice a little we will show a brief announcement (which can be skipped) when entering the activities screen, so we will not bother during your activity.\n\n Thank you for understanding.</string>
     <string name="hint_input_lap_distance">Enter with lap distance</string>
+    <string name="title_list_activity">List of Activities</string>
 </resources>

@@ -44,4 +44,5 @@
     <string name="activity_saved">Atividade salva</string>
     <string name="first_show_ad">Olá,\n\n  Primeiramente nos desculpe o incomodo, porém para o Desenvolvedor faturar um pouquinho exibiremos um breve anúncio (que pode ser pulado) ao entrar na tela de atividades, dessa forma não incomodaremos durante sua atividade. \n\n Agradecemos a compreensão.</string>
     <string name="hint_input_lap_distance">Entre com a distância da volta</string>
+    <string name="title_list_activity">Lista de atividades</string>
 </resources>

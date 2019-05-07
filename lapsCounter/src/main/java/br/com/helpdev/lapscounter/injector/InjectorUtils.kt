@@ -2,9 +2,9 @@ package br.com.helpdev.lapscounter.injector
 
 import br.com.helpdev.lapscounter.model.dao.ActivityDao
 import br.com.helpdev.lapscounter.model.repository.ActivityRepository
-import br.com.helpdev.lapscounter.viewmodel.ActivityViewModelFactory
+import br.com.helpdev.lapscounter.ui.viewmodel.ActivityViewModelFactory
 
-object ActivityInjector {
+object InjectorUtils {
 
     fun provideActivityViewModelFactory() = ActivityViewModelFactory(provideActivityRepository())
 

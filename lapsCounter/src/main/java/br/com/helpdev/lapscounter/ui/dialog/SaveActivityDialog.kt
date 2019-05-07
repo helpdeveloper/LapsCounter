@@ -1,13 +1,13 @@
-package br.com.helpdev.lapscounter.dialog
+package br.com.helpdev.lapscounter.ui.dialog
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import android.view.LayoutInflater
 import android.view.View
 import br.com.helpdev.lapscounter.R
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class SaveActivityDialog(context: Context) : AlertDialog(context), View.OnClickListener, DialogInterface.OnShowListener {
 

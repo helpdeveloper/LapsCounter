@@ -1,5 +1,6 @@
 package br.com.helpdev.lapscounter.model.repository
 
+import br.com.helpdev.lapscounter.model.RealmLiveData
 import br.com.helpdev.lapscounter.model.dao.ActivityDao
 import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 
@@ -16,5 +17,9 @@ class ActivityRepository(private val activityDao: ActivityDao) {
 
     fun save(activityEntity: ActivityEntity) {
         activityDao.insertOrUpdate(activityEntity)
+    }
+
+    fun getAllActivities(): RealmLiveData<ActivityEntity> {
+        return activityDao.selectAll()
     }
 }

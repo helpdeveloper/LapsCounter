@@ -5,7 +5,7 @@ import com.google.android.gms.ads.MobileAds
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
-class LapsCounterApplication : Application() {
+class AppApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

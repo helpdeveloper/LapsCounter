@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:keepScreenOn="true"
-    tools:context="br.com.helpdev.lapscounter.SettingsActivity">
+    tools:context="br.com.helpdev.lapscounter.ui.SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="br.com.helpdev.lapscounter.fragment.SettingsFragment"
+        android:name="br.com.helpdev.lapscounter.ui.fragment.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

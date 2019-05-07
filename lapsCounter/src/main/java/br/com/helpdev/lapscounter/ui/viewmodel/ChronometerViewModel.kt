@@ -1,4 +1,4 @@
-package br.com.helpdev.lapscounter.viewmodel
+package br.com.helpdev.lapscounter.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import br.com.helpdev.chronometerlib.Chronometer
@@ -6,7 +6,7 @@ import br.com.helpdev.lapscounter.model.repository.ActivityRepository
 import br.com.helpdev.lapscounter.utils.toActivityEntity
 import kotlin.concurrent.thread
 
-class ActivityViewModel(private val activityRepository: ActivityRepository) : ViewModel() {
+class ChronometerViewModel(private val activityRepository: ActivityRepository) : ViewModel() {
 
     var chronometer: Chronometer = Chronometer()
 

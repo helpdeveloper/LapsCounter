@@ -1,4 +1,4 @@
-package br.com.helpdev.lapscounter.adapter
+package br.com.helpdev.lapscounter.ui.adapter
 
 import android.content.Context
 import android.graphics.Color

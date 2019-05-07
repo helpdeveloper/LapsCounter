@@ -11,7 +11,7 @@
     android:paddingStart="@dimen/padding_screen_start"
     android:paddingTop="@dimen/padding_screen_top"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.helpdev.lapscounter.AbsMainActivity">
+    tools:context="br.com.helpdev.lapscounter.ChronometerActivityImpl">
 
     <include layout="@layout/include_chronometer" />
 

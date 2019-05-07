@@ -1,4 +1,4 @@
-package br.com.helpdev.lapscounter.ads
+package br.com.helpdev.lapscounter.ui.ads
 
 import android.content.Context
 import android.preference.PreferenceManager

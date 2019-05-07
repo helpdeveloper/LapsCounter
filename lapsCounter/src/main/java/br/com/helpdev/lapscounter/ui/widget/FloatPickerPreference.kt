@@ -1,4 +1,4 @@
-package br.com.helpdev.lapscounter.widget
+package br.com.helpdev.lapscounter.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet

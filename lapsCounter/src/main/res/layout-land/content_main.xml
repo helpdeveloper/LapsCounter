@@ -7,16 +7,16 @@
     android:baselineAligned="true"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.helpdev.lapscounter.AbsMainActivity">
+    tools:context="br.com.helpdev.lapscounter.ChronometerActivityImpl">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:paddingBottom="@dimen/padding_screen_bottom"
-        android:paddingEnd="@dimen/padding_screen_end"
         android:paddingStart="@dimen/padding_screen_start"
-        android:paddingTop="@dimen/padding_screen_top">
+        android:paddingTop="@dimen/padding_screen_top"
+        android:paddingEnd="@dimen/padding_screen_end"
+        android:paddingBottom="@dimen/padding_screen_bottom">
 
         <RelativeLayout
             android:layout_width="0dp"

@@ -19,7 +19,7 @@
         android:summary="@string/pref_audio_click_summary"
         android:title="@string/pref_audio_click_title" />
 
-    <br.com.helpdev.lapscounter.widget.FloatPickerPreference
+    <br.com.helpdev.lapscounter.ui.widget.FloatPickerPreference
         android:defaultValue="@integer/pref_lap_distance_default_value"
         android:key="@string/pref_lap_distance_name"
         android:title="@string/pref_lap_distance_title" />
