@@ -20,4 +20,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_activity_item" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

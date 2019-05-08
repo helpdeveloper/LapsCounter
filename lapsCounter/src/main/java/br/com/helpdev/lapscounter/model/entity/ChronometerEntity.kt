@@ -9,7 +9,5 @@ open class ChronometerEntity(
         var runningTime: Long = 0,
         var laps: RealmList<LapEntity> = RealmList()
 ) : RealmObject(), Serializable {
-    override fun toString(): String {
-        return "ChronometerEntity(pausedTime=$pausedTime, runningTime=$runningTime, laps=$laps)"
-    }
+    override fun toString() = "ChronometerEntity(pausedTime=$pausedTime, runningTime=$runningTime, laps=$laps)"
 }

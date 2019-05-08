@@ -25,6 +25,7 @@ import br.com.helpdev.lapscounter.ui.viewmodel.ChronometerViewModel
 import br.com.helpdev.lapscounter.utils.*
 import br.com.helpdev.lapscounter.utils.AlarmUtils.alarmAsync
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.distances_layout.*
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.include_lap_log.*
@@ -137,7 +138,7 @@ abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.H
     }
 
     private fun createAdapter() {
-        recycler_view.adapter = LapsAdapter(this, viewModel.chronometer.getObChronometer())
+        recycler_view.adapter = LapsAdapter(this, viewModel.chronometer.getObChronometer().laps)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

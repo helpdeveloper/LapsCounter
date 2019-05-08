@@ -9,37 +9,39 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.helpdev.chronometerlib.Chronometer
-import br.com.helpdev.chronometerlib.objects.ObChronometer
+import br.com.helpdev.chronometerlib.objects.ObLap
 import br.com.helpdev.lapscounter.R
 
-class LapsAdapter(private val context: Context, private val obChronometer: ObChronometer) : RecyclerView.Adapter<LapsAdapter.Companion.ItemHolder>() {
+class LapsAdapter(private val context: Context, private val laps: List<ObLap>) : RecyclerView.Adapter<LapsAdapter.ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(context)
         return ItemHolder(inflater.inflate(R.layout.item_lap_log, parent, false))
     }
 
-    override fun getItemCount() = if (obChronometer.laps.size == 0) 0 else obChronometer.laps.size - 1
+    override fun getItemCount() = if (laps.isEmpty()) 0 else laps.size - 1
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        val obLap = obChronometer.laps[position]
-        holder.numLap.text = context.getString(R.string.num_lap, String.format("%02d", position + 1))
-        holder.tvTime.text = Chronometer.getFormattedTime(obLap.getRunningTime())
-        if (obLap.pausedTime > 0) {
-            holder.tvTotalPauseTime.text = Chronometer.getFormattedTime(obLap.pausedTime)
-            holder.tvTotalPauseTime.setTextColor(Color.RED)
-        } else {
-            holder.tvTotalPauseTime.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText))
-        }
-        holder.tvTotalTime.text = Chronometer.getFormattedTime(obLap.chronometerTime)
+        holder.bind(laps[position], position)
     }
 
-    companion object {
-        class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val numLap: TextView = itemView.findViewById(R.id.numberOfLap_fix)
-            val tvTime: TextView = itemView.findViewById(R.id.chronometer_current_fix)
-            val tvTotalTime: TextView = itemView.findViewById(R.id.chronometer_total_fix)
-            val tvTotalPauseTime: TextView = itemView.findViewById(R.id.chronometer_pause_fix)
+    class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val numLap: TextView = itemView.findViewById(R.id.numberOfLap_fix)
+        private val tvTime: TextView = itemView.findViewById(R.id.chronometer_current_fix)
+        private val tvTotalTime: TextView = itemView.findViewById(R.id.chronometer_total_fix)
+        private val tvTotalPauseTime: TextView = itemView.findViewById(R.id.chronometer_pause_fix)
+
+        fun bind(obLap: ObLap, lapPosition: Int) {
+            numLap.text = itemView.context.getString(R.string.num_lap, String.format("%02d", lapPosition + 1))
+            tvTime.text = Chronometer.getFormattedTime(obLap.getRunningTime())
+            if (obLap.pausedTime > 0) {
+                tvTotalPauseTime.text = Chronometer.getFormattedTime(obLap.pausedTime)
+                tvTotalPauseTime.setTextColor(Color.RED)
+            } else {
+                tvTotalPauseTime.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorSecondaryText))
+            }
+            tvTotalTime.text = Chronometer.getFormattedTime(obLap.chronometerTime)
         }
     }
 }

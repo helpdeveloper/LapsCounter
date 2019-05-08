@@ -16,28 +16,35 @@
         android:orientation="vertical"
         tools:context=".ui.ActivitiesActivity">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@{activityEntity.name}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        <include
+            android:id="@+id/include_distances_layout"
+            layout="@layout/distances_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@sample/activityEntity.json/name" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:text="@{activityEntity.description}"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="@id/name"
-            app:layout_constraintStart_toStartOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:isGoneIfEmpty="@{activityEntity.description}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/include_distances_layout"
             tools:text="@sample/activityEntity.json/description" />
+
+        <include
+            android:id="@+id/layout_log"
+            layout="@layout/include_lap_log"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/adView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"

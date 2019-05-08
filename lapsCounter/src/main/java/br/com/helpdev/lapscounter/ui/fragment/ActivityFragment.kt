@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import br.com.helpdev.lapscounter.R
 import br.com.helpdev.lapscounter.databinding.FragmentActivityBinding
+import br.com.helpdev.lapscounter.ui.ActivitiesActivity
 import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.fragment_activity.*
+
 
 class ActivityFragment : Fragment() {
 
@@ -22,6 +24,11 @@ class ActivityFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bind(view)
         loadAds()
+        configureToolbar()
+    }
+
+    private fun configureToolbar() {
+        (activity as ActivitiesActivity).supportActionBar?.title = activityEntity.name
     }
 
     private fun bind(view: View) {

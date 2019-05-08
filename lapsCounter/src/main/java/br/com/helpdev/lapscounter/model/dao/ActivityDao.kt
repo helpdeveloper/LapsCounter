@@ -4,6 +4,7 @@ import br.com.helpdev.lapscounter.model.RealmLiveData
 import br.com.helpdev.lapscounter.model.asLiveData
 import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 import io.realm.Realm
+import io.realm.Sort
 
 class ActivityDao {
 
@@ -27,6 +28,7 @@ class ActivityDao {
     fun selectAll(): RealmLiveData<ActivityEntity> {
         return Realm.getDefaultInstance()
                 .where(ActivityEntity::class.java)
+                .sort("dateStarted", Sort.DESCENDING)
                 .findAllAsync()
                 .asLiveData()
     }

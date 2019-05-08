@@ -7,7 +7,5 @@ open class LapEntity(
         var runningTime: Long = 0,
         var pausedTime: Long = 0
 ) : RealmObject(), Serializable {
-    override fun toString(): String {
-        return "LapEntity(runningTime=$runningTime, pausedTime=$pausedTime)"
-    }
+    override fun toString() = "LapEntity(runningTime=$runningTime, pausedTime=$pausedTime)"
 }
