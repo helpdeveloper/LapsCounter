@@ -17,14 +17,15 @@ class ListActivityAdapter(val onClickItem: (ActivityEntity) -> Unit) : ListAdapt
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.itemView.setOnClickListener { onClickItem(getItem(position)) }
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onClickItem)
     }
 
     class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.name)
-        fun bind(activityEntity: ActivityEntity) {
+        private val layoutClickable: View = itemView.findViewById(R.id.layout_clickable)
+        fun bind(activityEntity: ActivityEntity, onClickItem: (ActivityEntity) -> Unit) {
             textView.text = activityEntity.name
+            layoutClickable.setOnClickListener { onClickItem(activityEntity) }
         }
     }
 }
