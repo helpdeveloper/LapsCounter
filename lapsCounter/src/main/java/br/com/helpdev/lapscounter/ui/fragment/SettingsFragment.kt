@@ -13,15 +13,19 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     }
 
     private fun configureLapDistance() {
-        preferenceManager.findPreference(getString(R.string.pref_lap_distance_name))?.let { pref ->
-            pref.onPreferenceChangeListener = this
-            onPreferenceChange(pref,
-                    preferenceManager.sharedPreferences.getFloat(pref.key,
-                            resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat()
-                    )
+        val pref = getLapDistancePreference()
+        pref.onPreferenceChangeListener = this
+        onPreferenceChange(
+            pref,
+            preferenceManager.sharedPreferences.getFloat(
+                pref.key,
+                resources.getInteger(R.integer.pref_lap_distance_default_value).toFloat()
             )
-        }
+        )
     }
+
+    private fun getLapDistancePreference() =
+        preferenceManager.findPreference(getString(R.string.pref_lap_distance_name))!!
 
     override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
         when (preference.key) {

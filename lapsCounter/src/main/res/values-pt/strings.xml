@@ -34,7 +34,8 @@
         %s
         ==================
     </string>
-    <string name="text_lap_share" formatted="true">\nVolta: %d\nTempo: %s\nAcumulado: %s\nPausado: %s\nRitimo: %s\n</string>
+    <string name="text_lap_share" formatted="true">\nVolta: %d\nTempo: %s\nAcumulado: %s\nPausado: %s\nRitimo: %s\n
+    </string>
     <string name="last_lap_dont_count">(Última volta não contabiliza no ritimo e distância total)</string>
     <string name="confirm_exit">Confirma sair?</string>
     <string name="save_activity_message">Suas informações da atividade</string>
@@ -42,7 +43,13 @@
     <string name="hint_description_activity">Descrição da atividade</string>
     <string name="error_empty_name">Empty name is not allow</string>
     <string name="activity_saved">Atividade salva</string>
-    <string name="first_show_ad">Olá,\n\n  Primeiramente nos desculpe o incomodo, porém para o Desenvolvedor faturar um pouquinho exibiremos um breve anúncio (que pode ser pulado) ao entrar na tela de atividades, dessa forma não incomodaremos durante sua atividade. \n\n Agradecemos a compreensão.</string>
+    <string name="first_show_ad">Olá,\n\n Primeiramente nos desculpe o incomodo, porém para o Desenvolvedor faturar um
+        pouquinho exibiremos um breve anúncio (que pode ser pulado) ao entrar na tela de atividades, dessa forma não
+        incomodaremos durante sua atividade. \n\n Agradecemos a compreensão.
+    </string>
     <string name="hint_input_lap_distance">Entre com a distância da volta</string>
     <string name="title_list_activity">Lista de atividades</string>
+    <string name="menu_remove">Remover</string>
+    <string name="activity_removed">Atividade removida</string>
+    <string name="confirm_delete">Você confirma excluir atividade?</string>
 </resources>

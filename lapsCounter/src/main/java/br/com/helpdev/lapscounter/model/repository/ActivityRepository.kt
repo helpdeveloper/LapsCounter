@@ -22,4 +22,8 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     fun getAllActivities(): RealmLiveData<ActivityEntity> {
         return activityDao.selectAll()
     }
+
+    fun delete(activityEntity: ActivityEntity) {
+        activityDao.delete(activityEntity)
+    }
 }

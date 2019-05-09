@@ -17,6 +17,11 @@ fun formattedChronometerTime(textView: TextView, runningTime: Long) {
     textView.text = Chronometer.getFormattedTime(runningTime)
 }
 
+@BindingAdapter("isGone")
+fun isGone(textView: TextView, hasItems: Boolean) {
+    if (hasItems) textView.visibility = View.GONE
+}
+
 @BindingAdapter("isGoneIfEmpty")
 fun isGoneIfEmpty(textView: TextView, text: String) {
     if (text.isEmpty()) textView.visibility = View.GONE

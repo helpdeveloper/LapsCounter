@@ -32,4 +32,14 @@ class ActivityDao {
                 .findAllAsync()
                 .asLiveData()
     }
+
+    fun delete(activityEntity: ActivityEntity) {
+        Realm.getDefaultInstance().use { db ->
+            db.executeTransaction { realm ->
+                realm.where(ActivityEntity::class.java)
+                    .equalTo("id", activityEntity.id)
+                    .findFirst()?.deleteFromRealm()
+            }
+        }
+    }
 }

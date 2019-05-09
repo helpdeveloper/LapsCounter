@@ -44,13 +44,11 @@ android {
 //        running { applicationIdSuffix ".running" }
 //        cycling { applicationIdSuffix ".cycling" }
     }
-    lintOptions {
-        checkReleaseBuilds false
-    }
+
 }
 
 dependencies {
-    implementation project(':chronometerLib')
+    implementation 'com.github.gbzarelli:chronometer-library:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     testImplementation "junit:junit:$junitVersion"
     implementation "com.google.android.gms:play-services-ads:$playServicesAdsVersion"

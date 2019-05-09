@@ -12,14 +12,20 @@ import br.com.helpdev.chronometerlib.Chronometer
 import br.com.helpdev.chronometerlib.objects.ObLap
 import br.com.helpdev.lapscounter.R
 
-class LapsAdapter(private val context: Context, private val laps: List<ObLap>) : RecyclerView.Adapter<LapsAdapter.ItemHolder>() {
+class LapsAdapter(
+    private val context: Context,
+    private val laps: List<ObLap>,
+    private val removeLastLap: Boolean = true
+) : RecyclerView.Adapter<LapsAdapter.ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(context)
         return ItemHolder(inflater.inflate(R.layout.item_lap_log, parent, false))
     }
 
-    override fun getItemCount() = if (laps.isEmpty()) 0 else laps.size - 1
+    override fun getItemCount() = if (laps.isEmpty()) 0 else {
+        if (removeLastLap) laps.size - 1 else laps.size
+    }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.bind(laps[position], position)

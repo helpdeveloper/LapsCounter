@@ -18,9 +18,7 @@ object ChronometerUtils {
             runningTime += obLap.getRunningTime()
         }
 
-        val pace = ((runningTime * 100) / distanceTravelled).toLong()
-
-        return Pair(pace / 60_000L, (pace % 60_000L) / 1000L)
+        return getPace(runningTime, distanceTravelled)
     }
 
     fun getPace(runningTime: Long, distanceTravelled: Float): Pair<Long, Long> {

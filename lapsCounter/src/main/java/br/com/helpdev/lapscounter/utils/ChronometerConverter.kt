@@ -13,7 +13,7 @@ fun Chronometer.toActivityEntity(name: String, description: String, lapDistance:
 
     for (x in 0 until getObChronometer().laps.size) {
         val lap = getObChronometer().laps[x]
-        activityEntity.chronometer!!.laps.add(LapEntity(lap.getRunningTime(), lap.pausedTime))
+        activityEntity.chronometer!!.laps.add(LapEntity(lap.chronometerTime, lap.getRunningTime(), lap.pausedTime))
         activityEntity.chronometer!!.runningTime += lap.getRunningTime()
         activityEntity.chronometer!!.pausedTime += lap.pausedTime
     }

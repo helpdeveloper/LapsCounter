@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import br.com.helpdev.lapscounter.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class SaveActivityDialog(context: Context) : AlertDialog(context), View.OnClickListener, DialogInterface.OnShowListener {
+class SaveActivityDialog(context: Context) : AlertDialog(context), View.OnClickListener,
+    DialogInterface.OnShowListener {
 
     private lateinit var callback: (name: String, description: String) -> Unit
     private var editActivityName: TextInputEditText
@@ -33,6 +35,12 @@ class SaveActivityDialog(context: Context) : AlertDialog(context), View.OnClickL
         val positiveButton = getButton(DialogInterface.BUTTON_POSITIVE)
         positiveButton.id = DialogInterface.BUTTON_POSITIVE
         positiveButton.setOnClickListener(this)
+        editActivityName.requestFocus()
+        openKeyboard()
+    }
+
+    private fun openKeyboard() {
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     }
 
     override fun onClick(v: View?) {

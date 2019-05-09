@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import br.com.helpdev.lapscounter.R
+import br.com.helpdev.lapscounter.databinding.FragmentListActivityBinding
 import br.com.helpdev.lapscounter.injector.InjectorUtils
 import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 import br.com.helpdev.lapscounter.ui.adapter.ListActivityAdapter
@@ -22,9 +23,12 @@ class ListActivityFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
-                .get(ListActivityViewModel::class.java)
+        viewModel = loadViewModel()
     }
+
+    private fun loadViewModel() = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
+        .get(ListActivityViewModel::class.java)
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_activity, container, false)
@@ -32,24 +36,29 @@ class ListActivityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        createAdapter()
+        listActivityAdapter = createAdapter()
         initData()
     }
 
-    private fun initData() {
-        viewModel.activities.observe(this, Observer { realmResults ->
-            listActivityAdapter.submitList(realmResults.toList())
-        })
-    }
+    private fun createAdapter() = ListActivityAdapter { navigateToActivity(it) }
+        .also { recycler_view.adapter = it }
 
-    private fun createAdapter() {
-        listActivityAdapter = ListActivityAdapter { navigateToActivity(it) }
-        recycler_view.adapter = listActivityAdapter
+    private fun initData() {
+        val bind = FragmentListActivityBinding.bind(view!!)
+        viewModel.activities.observe(this, Observer { realmResults ->
+            val toList = realmResults.toList()
+            if (toList.isNullOrEmpty()) {
+                bind.hasItems = false
+            } else {
+                bind.hasItems = true
+                listActivityAdapter.submitList(toList)
+            }
+        })
     }
 
     private fun navigateToActivity(activityEntity: ActivityEntity) {
         Navigation.findNavController(view!!).navigate(
-                ListActivityFragmentDirections.actionListActivityFragmentToActivityFragment(activityEntity)
+            ListActivityFragmentDirections.actionListActivityFragmentToActivityFragment(activityEntity)
         )
     }
 }

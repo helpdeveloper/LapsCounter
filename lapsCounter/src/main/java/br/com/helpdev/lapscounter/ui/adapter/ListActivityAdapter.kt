@@ -6,25 +6,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.helpdev.lapscounter.R
 import br.com.helpdev.lapscounter.databinding.ListActivityItemBinding
 import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 
-class ListActivityAdapter(private val onClickItem: (ActivityEntity) -> Unit) : ListAdapter<ActivityEntity, ListActivityAdapter.ItemHolder>(ListActivityDiff()) {
+class ListActivityAdapter(private val onClickItem: (ActivityEntity) -> Unit) :
+    ListAdapter<ActivityEntity, ListActivityAdapter.ItemHolder>(ListActivityDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-        return ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_activity_item, parent, false))
+        return ItemHolder(ListActivityItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.bind(getItem(position), onClickItem)
+        val item = getItem(position)
+        holder.apply {
+            bind(item, onClickItem)
+            itemView.tag = item.id
+        }
     }
 
-    class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ItemHolder(private val binding: ListActivityItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entity: ActivityEntity, onClickItem: (ActivityEntity) -> Unit) {
-            with(ListActivityItemBinding.bind(itemView)) {
+            binding.apply {
                 activityEntity = entity
                 onClickListener = View.OnClickListener { onClickItem(entity) }
+                executePendingBindings()
             }
         }
     }

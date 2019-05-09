@@ -12,6 +12,8 @@ open class ActivityEntity(
         var description: String? = null,
         var chronometer: ChronometerEntity? = ChronometerEntity(),
         var lapDistance: Float = 0.0f,
+        var travelledDistance: Float = 0.0f,
+        var countLastLap: Boolean = false,
         var dateStarted: Date? = null
 ) : RealmObject(), Serializable {
     override fun toString() = "ActivityEntity(id='$id', name='$name', description=$description, chronometer=$chronometer, lapDistance=$lapDistance, dateStarted=$dateStarted)"

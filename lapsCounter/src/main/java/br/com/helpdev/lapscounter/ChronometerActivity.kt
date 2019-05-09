@@ -2,6 +2,7 @@ package br.com.helpdev.lapscounter
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.SystemClock
 import android.preference.PreferenceManager
@@ -24,13 +25,13 @@ import br.com.helpdev.lapscounter.ui.dialog.SaveActivityDialog
 import br.com.helpdev.lapscounter.ui.viewmodel.ChronometerViewModel
 import br.com.helpdev.lapscounter.utils.*
 import br.com.helpdev.lapscounter.utils.AlarmUtils.alarmAsync
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.distances_layout.*
 import kotlinx.android.synthetic.main.include_buttons.*
 import kotlinx.android.synthetic.main.include_chronometer.*
 import kotlinx.android.synthetic.main.include_lap_log.*
 import kotlinx.android.synthetic.main.lap_log_chronometers.*
 import kotlinx.android.synthetic.main.main_toolbar.*
+import kotlin.concurrent.thread
 
 abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.HeadsetButtonControlListener {
     companion object {
@@ -53,16 +54,16 @@ abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.H
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         configureOnClicks()
-
-        viewModel = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
-                .get(ChronometerViewModel::class.java)
-
+        viewModel = loadViewModel()
         if (null != savedInstanceState) {
             restoreInstanceVisibilityViews(savedInstanceState)
             onRestoreChronometer()
         }
         updateParameters()
     }
+
+    private fun loadViewModel() = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
+        .get(ChronometerViewModel::class.java)
 
     private fun configureOnClicks() {
         bt_start.setOnClickListener { btStartPressed().run { alarm(R.raw.beep) } }
@@ -243,7 +244,8 @@ abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.H
     }
 
     private fun refreshChronometerLog() {
-        numberOfLap.text = getString(R.string.num_lap, String.format("%02d", viewModel.chronometer.getObChronometer().laps.size))
+        numberOfLap.text =
+            getString(R.string.num_lap, String.format("%02d", viewModel.chronometer.getObChronometer().laps.size))
         chronometerLogCurrent.base = viewModel.chronometer.getBaseLastLap()
     }
 
@@ -276,9 +278,33 @@ abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.H
     }
 
     private fun saveActivity(name: String, description: String) {
-        viewModel.saveActivity(name, description, lapDistance)
-        Snackbar.make(recycler_view, R.string.activity_saved, Snackbar.LENGTH_LONG).show()
-        btRestartPressed()
+        viewModel.saveActivity(name, description, lapDistance, countLastLap)
+        showDialogActivitySaved()
+    }
+
+    private fun showDialogActivitySaved() {
+        dialog = createDialogActivitySaved()
+        configureDialogAnimation(dialog!!)
+        dialog!!.show()
+        runDismissDelayDialog(1500)
+    }
+
+    private fun runDismissDelayDialog(timeDelay: Long) {
+        thread {
+            Thread.sleep(timeDelay)
+            dismissDialog()
+        }
+    }
+
+    private fun createDialogActivitySaved(): AlertDialog? {
+        return AlertDialog.Builder(this).apply {
+            setView(R.layout.dialog_activity_saved)
+        }.create()
+    }
+
+    private fun configureDialogAnimation(dialog: AlertDialog) {
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogActivitySavedAnimation
     }
 
     private fun btSharePressed() {
@@ -346,14 +372,24 @@ abstract class ChronometerActivity : AppCompatActivity(), HeadsetButtonControl.H
     }
 
     private fun headsetButtonsEnable() = PreferenceManager.getDefaultSharedPreferences(this)
-            .getBoolean(getString(R.string.pref_headset_buttons_name), resources.getBoolean(R.bool.pref_headset_buttons_default_value))
+        .getBoolean(
+            getString(R.string.pref_headset_buttons_name),
+            resources.getBoolean(R.bool.pref_headset_buttons_default_value)
+        )
 
 
     override fun onPause() {
         headsetButtonReceiver?.unregisterHeadsetButton(this)
-        dialog?.dismiss()
+        dismissDialog()
         saveActivityDialog?.dismiss()
         super.onPause()
+    }
+
+    private fun dismissDialog() {
+        dialog?.let {
+            it.dismiss()
+            dialog = null
+        }
     }
 
     override fun btHeadsetHookPressed(keyEvent: KeyEvent?) {
