@@ -20,6 +20,7 @@ class SaveActivityDialog(context: Context) : AlertDialog(context), View.OnClickL
 
     init {
         setTitle(R.string.app_name)
+        setCancelable(false)
         setMessage(context.getString(R.string.save_activity_message))
         val customView = LayoutInflater.from(context).inflate(R.layout.save_activity_dialog, null)
         editActivityName = customView.findViewById(R.id.edit_activity_name)

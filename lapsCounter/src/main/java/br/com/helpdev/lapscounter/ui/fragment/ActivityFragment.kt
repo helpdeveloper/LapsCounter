@@ -9,13 +9,14 @@ import androidx.navigation.Navigation
 import br.com.helpdev.lapscounter.R
 import br.com.helpdev.lapscounter.databinding.FragmentActivityBinding
 import br.com.helpdev.lapscounter.injector.InjectorUtils
+import br.com.helpdev.lapscounter.model.entity.toObLaps
 import br.com.helpdev.lapscounter.ui.ActivitiesActivity
 import br.com.helpdev.lapscounter.ui.adapter.LapsAdapter
 import br.com.helpdev.lapscounter.ui.viewmodel.ActivityViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_activity.*
-import kotlinx.android.synthetic.main.include_lap_log.*
+import kotlinx.android.synthetic.main.include_lap_log.view.*
 
 
 class ActivityFragment : Fragment() {
@@ -27,31 +28,50 @@ class ActivityFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel = loadViewModel()
     }
 
     override fun onPause() {
         super.onPause()
+        dismissDialog()
+    }
+
+    private fun dismissDialog() {
         dialog?.let {
             it.dismiss()
             dialog = null
         }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return FragmentActivityBinding.inflate(layoutInflater, container, false).apply {
+            subscribeUI(this)
+        }.let { it.root }
+    }
+
+    private fun subscribeUI(binding: FragmentActivityBinding) {
+        viewModel = loadViewModel()
+        binding.viewModel = viewModel
+        viewModel.init(context!!, activityEntity)
+        configureLapsLog(binding)
+    }
+
     private fun loadViewModel() = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
         .get(ActivityViewModel::class.java)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_activity, container, false)
+    private fun configureLapsLog(binding: FragmentActivityBinding) {
+        val toObLaps = activityEntity.chronometer!!.toObLaps()
+        binding.layoutLog.recycler_view.adapter = LapsAdapter(context!!, toObLaps, false)
+        if (toObLaps.isNotEmpty()) binding.layoutLog.text_view_empty.visibility = View.GONE
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.init(context!!, activityEntity)
-        bind(view)
+        setTitleToolbar()
         loadAds()
-        configureToolbar()
-        configureLapsLog()
+    }
+
+    private fun setTitleToolbar() {
+        (activity as ActivitiesActivity).supportActionBar?.title = activityEntity.name
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -82,24 +102,9 @@ class ActivityFragment : Fragment() {
         Navigation.findNavController(view!!).navigateUp()
     }
 
-    private fun bind(view: View) {
-        with(FragmentActivityBinding.bind(view)) {
-            viewModel = this@ActivityFragment.viewModel
-        }
-    }
 
     private fun loadAds() {
         adView.loadAd(AdRequest.Builder().build())
-    }
-
-    private fun configureToolbar() {
-        (activity as ActivitiesActivity).supportActionBar?.title = activityEntity.name
-    }
-
-    private fun configureLapsLog() {
-        val toObLaps = activityEntity.chronometer!!.toObLaps()
-        recycler_view.adapter = LapsAdapter(context!!, toObLaps, false)
-        if (toObLaps.isNotEmpty()) text_view_empty.visibility = View.GONE
     }
 
 }
