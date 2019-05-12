@@ -23,6 +23,6 @@ class AppApplication : Application() {
     }
 
     private fun getRealmConfiguration() = RealmConfiguration.Builder()
-            .name("app.realm")
-            .build()
+        .name("app.realm")
+        .build()
 }
