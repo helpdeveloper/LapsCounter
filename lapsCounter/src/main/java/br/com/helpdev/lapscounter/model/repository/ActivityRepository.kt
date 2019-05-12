@@ -26,4 +26,8 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     fun delete(activityEntity: ActivityEntity) {
         activityDao.delete(activityEntity)
     }
+
+    fun getActivity(activityEntityId: String): ActivityEntity {
+        return activityDao.select(activityEntityId)
+    }
 }

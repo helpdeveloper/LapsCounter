@@ -15,7 +15,7 @@ import br.com.helpdev.lapscounter.ui.adapter.ListActivityAdapter
 import br.com.helpdev.lapscounter.ui.viewmodel.ListActivityViewModel
 
 class ListActivityFragment : Fragment() {
-    
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentListActivityBinding.inflate(inflater, container, false).apply {
             subscribeUI(this)
@@ -35,7 +35,7 @@ class ListActivityFragment : Fragment() {
         .get(ListActivityViewModel::class.java)
 
     private fun ListActivityViewModel.observerActivities(
-        listActivityAdapter: ListActivityAdapter,
+        adapter: ListActivityAdapter,
         binding: FragmentListActivityBinding
     ) {
         activities.observe(this@ListActivityFragment, Observer { realmResults ->
@@ -44,14 +44,14 @@ class ListActivityFragment : Fragment() {
                 binding.hasItems = false
             } else {
                 binding.hasItems = true
-                listActivityAdapter.submitList(toList)
+                adapter.submitList(toList)
             }
         })
     }
 
     private fun navigateToActivity(activityEntity: ActivityEntity) {
         Navigation.findNavController(view!!).navigate(
-            ListActivityFragmentDirections.actionListActivityFragmentToActivityFragment(activityEntity)
+            ListActivityFragmentDirections.actionListActivityFragmentToActivityFragment(activityEntity.id)
         )
     }
 }

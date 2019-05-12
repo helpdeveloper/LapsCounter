@@ -14,9 +14,9 @@ fun ChronometerEntity.toObLaps(): List<ObLap> {
 }
 
 open class ChronometerEntity(
-        var pausedTime: Long = 0,
-        var runningTime: Long = 0,
-        var laps: RealmList<LapEntity> = RealmList()
+    var pausedTime: Long = 0,
+    var runningTime: Long = 0,
+    var laps: RealmList<LapEntity> = RealmList()
 ) : RealmObject(), Serializable {
     override fun toString() = "ChronometerEntity(pausedTime=$pausedTime, runningTime=$runningTime, laps=$laps)"
 }

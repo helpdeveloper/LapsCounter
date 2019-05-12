@@ -41,4 +41,11 @@ class ActivityDao {
             }
         }
     }
+
+    fun select(activityEntityId: String): ActivityEntity {
+        return Realm.getDefaultInstance()
+            .where(ActivityEntity::class.java)
+            .equalTo("id", activityEntityId)
+            .findFirst()!!
+    }
 }

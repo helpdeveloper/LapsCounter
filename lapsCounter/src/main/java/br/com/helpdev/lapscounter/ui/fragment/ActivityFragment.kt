@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import br.com.helpdev.lapscounter.R
 import br.com.helpdev.lapscounter.databinding.FragmentActivityBinding
 import br.com.helpdev.lapscounter.injector.InjectorUtils
+import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 import br.com.helpdev.lapscounter.model.entity.toObLaps
 import br.com.helpdev.lapscounter.ui.ActivitiesActivity
 import br.com.helpdev.lapscounter.ui.adapter.LapsAdapter
@@ -48,30 +50,36 @@ class ActivityFragment : Fragment() {
     }
 
     private fun subscribeUI(binding: FragmentActivityBinding) {
-        val activityEntity = ActivityFragmentArgs.fromBundle(arguments!!).activityEntity
+        val activityEntityId = ActivityFragmentArgs.fromBundle(arguments!!).activityEntityId
         viewModel = loadViewModel()
         binding.viewModel = viewModel
-        viewModel.init(context!!, activityEntity)
-        configureLapsLog(viewModel, binding)
+        viewModel.init(context!!, activityEntityId)
+        observerActivityEntity(viewModel, binding)
+    }
+
+    private fun observerActivityEntity(viewModel: ActivityViewModel, binding: FragmentActivityBinding) {
+        viewModel.activityEntity.observe(this, Observer { activityEntity ->
+            configureLapsLog(activityEntity, binding)
+            setToolbarTitle(activityEntity.name)
+        })
     }
 
     private fun loadViewModel() = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
         .get(ActivityViewModel::class.java)
 
-    private fun configureLapsLog(viewModel: ActivityViewModel, binding: FragmentActivityBinding) {
-        val toObLaps = viewModel.activityEntity?.chronometer!!.toObLaps()
+    private fun configureLapsLog(activityEntity: ActivityEntity, binding: FragmentActivityBinding) {
+        val toObLaps = activityEntity.chronometer!!.toObLaps()
         binding.layoutLog.recycler_view.adapter = LapsAdapter(context!!, toObLaps, false)
         if (toObLaps.isNotEmpty()) binding.layoutLog.text_view_empty.visibility = View.GONE
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTitleToolbar()
         loadAds()
     }
 
-    private fun setTitleToolbar() {
-        (activity as ActivitiesActivity).supportActionBar?.title = viewModel.activityEntity?.name
+    private fun setToolbarTitle(name: String) {
+        (activity as ActivitiesActivity).supportActionBar?.title = name
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -85,7 +93,6 @@ class ActivityFragment : Fragment() {
     }
 
     private fun MenuItem.isRemoveItem() = itemId == R.id.menu_remove
-
 
     private fun showDialogDelete() {
         AlertDialog.Builder(context!!).apply {

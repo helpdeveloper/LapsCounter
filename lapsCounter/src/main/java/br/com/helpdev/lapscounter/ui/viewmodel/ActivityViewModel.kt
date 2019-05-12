@@ -1,23 +1,35 @@
 package br.com.helpdev.lapscounter.ui.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import br.com.helpdev.lapscounter.R
+import br.com.helpdev.lapscounter.model.RealmLiveData
 import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 import br.com.helpdev.lapscounter.model.repository.ActivityRepository
 import br.com.helpdev.lapscounter.ui.viewmodel.objects.HeaderDistances
 import br.com.helpdev.lapscounter.utils.ChronometerUtils
 import br.com.helpdev.lapscounter.utils.getStringLapDistance
+import kotlin.concurrent.thread
 
 class ActivityViewModel(private val activityRepository: ActivityRepository) : ViewModel() {
 
-    var activityEntity: ActivityEntity? = null
+    var activityEntity = MutableLiveData<ActivityEntity>()
     val headerDistances = HeaderDistances()
 
-    fun init(context: Context, activityEntity: ActivityEntity) {
-        if (this.activityEntity != null) return
-        this.activityEntity = activityEntity
-        initHeaderDistances(context, activityEntity)
+    fun init(context: Context, activityEntityId: String) {
+        if (this.activityEntity.value != null) return
+        //TODO - MAKE ASYNC
+        getActivityEntity(activityEntityId).also { entity ->
+            this.activityEntity.value = entity
+            initHeaderDistances(context, entity)
+        }
+    }
+
+    private fun getActivityEntity(activityEntityId: String): ActivityEntity {
+        return activityRepository.getActivity(activityEntityId)
     }
 
     private fun initHeaderDistances(context: Context, activityEntity: ActivityEntity) {
@@ -46,6 +58,6 @@ class ActivityViewModel(private val activityRepository: ActivityRepository) : Vi
     }
 
     fun deleteActivity() {
-        activityEntity?.let { activityRepository.delete(it) }
+        activityEntity.value?.let { activityRepository.delete(it) }
     }
 }

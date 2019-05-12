@@ -34,7 +34,13 @@
         %s
         ==================
     </string>
-    <string name="text_lap_share" formatted="true">\nVolta: %d\nTempo: %s\nAcumulado: %s\nPausado: %s\nRitimo: %s\n
+    <string name="text_lap_share" formatted="true">
+        \nVolta: %d
+        \nTempo: %s
+        \nAcumulado: %s
+        \nPausado: %s
+        \nRitimo: %s
+        \n
     </string>
     <string name="last_lap_dont_count">(Última volta não contabiliza no ritimo e distância total)</string>
     <string name="confirm_exit">Confirma sair?</string>

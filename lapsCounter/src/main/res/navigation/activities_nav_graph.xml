@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activities_nav_graph"
-    app:startDestination="@id/listActivityFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/activities_nav_graph"
+            app:startDestination="@id/listActivityFragment">
 
     <fragment
-        android:id="@+id/listActivityFragment"
-        android:name="br.com.helpdev.lapscounter.ui.fragment.ListActivityFragment"
-        android:label="@string/title_list_activity">
+            android:id="@+id/listActivityFragment"
+            android:name="br.com.helpdev.lapscounter.ui.fragment.ListActivityFragment"
+            android:label="@string/title_list_activity">
         <action
-            android:id="@+id/action_listActivityFragment_to_activityFragment"
-            app:destination="@id/activityFragment" />
+                android:id="@+id/action_listActivityFragment_to_activityFragment"
+                app:destination="@id/activityFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/activityFragment"
-        android:name="br.com.helpdev.lapscounter.ui.fragment.ActivityFragment">
+            android:id="@+id/activityFragment"
+            android:name="br.com.helpdev.lapscounter.ui.fragment.ActivityFragment">
         <argument
-            android:name="activityEntity"
-            app:argType="br.com.helpdev.lapscounter.model.entity.ActivityEntity" />
+                android:name="activityEntityId"
+                app:argType="string"/>
     </fragment>
 
 </navigation>
