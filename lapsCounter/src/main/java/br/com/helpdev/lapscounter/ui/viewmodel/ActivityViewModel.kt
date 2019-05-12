@@ -11,19 +11,41 @@ import br.com.helpdev.lapscounter.utils.getStringLapDistance
 
 class ActivityViewModel(private val activityRepository: ActivityRepository) : ViewModel() {
 
-    lateinit var activityEntity: ActivityEntity
+    var activityEntity: ActivityEntity? = null
     val headerDistances = HeaderDistances()
 
     fun init(context: Context, activityEntity: ActivityEntity) {
+        if (this.activityEntity != null) return
         this.activityEntity = activityEntity
+        initHeaderDistances(context, activityEntity)
+    }
+
+    private fun initHeaderDistances(context: Context, activityEntity: ActivityEntity) {
         headerDistances.lapDistance.value = getStringLapDistance(context, activityEntity.lapDistance)
-        headerDistances.travelledDistance.value =
-            context.getString(R.string.info_travelled, activityEntity.travelledDistance)
-        val pace = ChronometerUtils.getPace(activityEntity.chronometer!!.runningTime, activityEntity.travelledDistance)
-        headerDistances.pace.value = context.getString(R.string.info_pace, pace.first, pace.second)
+        headerDistances.travelledDistance.value = getStringTravelledDistance(context, activityEntity)
+        headerDistances.pace.value = getStringPace(context, activityEntity)
+    }
+
+    private fun getStringTravelledDistance(context: Context, activityEntity: ActivityEntity) =
+        context.getString(R.string.info_travelled, activityEntity.travelledDistance)
+
+    private fun getStringPace(context: Context, activityEntity: ActivityEntity): String {
+        val pace = getPace(activityEntity)
+        return context.getString(R.string.info_pace, pace.first, pace.second)
+    }
+
+    private fun getPace(activityEntity: ActivityEntity) =
+        ChronometerUtils.getPace(getRunningTimeToPace(activityEntity), activityEntity.travelledDistance)
+
+    private fun getRunningTimeToPace(activityEntity: ActivityEntity): Long {
+        val removedTimeToPace = if (activityEntity.countLastLap) {
+            0
+        } else
+            activityEntity.chronometer!!.laps.last()?.runningTime ?: 0
+        return (activityEntity.chronometer!!.runningTime - removedTimeToPace)
     }
 
     fun deleteActivity() {
-        activityRepository.delete(activityEntity)
+        activityEntity?.let { activityRepository.delete(it) }
     }
 }

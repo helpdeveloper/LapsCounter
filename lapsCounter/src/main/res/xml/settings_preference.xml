@@ -2,26 +2,30 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:defaultValue="@bool/pref_headset_buttons_default_value"
-        android:key="@string/pref_headset_buttons_name"
-        android:summary="@string/pref_headset_buttons_summary"
-        android:title="@string/pref_headset_buttons_title" />
+            android:icon="@drawable/ic_headphone"
+            android:defaultValue="@bool/pref_headset_buttons_default_value"
+            android:key="@string/pref_headset_buttons_name"
+            android:summary="@string/pref_headset_buttons_summary"
+            android:title="@string/pref_headset_buttons_title"/>
 
     <CheckBoxPreference
-        android:defaultValue="@bool/pref_count_last_lap_default_value"
-        android:key="@string/pref_count_last_lap_name"
-        android:summary="@string/pref_count_last_lap_summary"
-        android:title="@string/pref_count_last_lap_title" />
+            android:icon="@drawable/ic_lastlap"
+            android:defaultValue="@bool/pref_count_last_lap_default_value"
+            android:key="@string/pref_count_last_lap_name"
+            android:summary="@string/pref_count_last_lap_summary"
+            android:title="@string/pref_count_last_lap_title"/>
 
     <CheckBoxPreference
-        android:defaultValue="@bool/pref_audio_click_value"
-        android:key="@string/pref_audio_click_name"
-        android:summary="@string/pref_audio_click_summary"
-        android:title="@string/pref_audio_click_title" />
+            android:icon="@drawable/ic_sound"
+            android:defaultValue="@bool/pref_audio_click_value"
+            android:key="@string/pref_audio_click_name"
+            android:summary="@string/pref_audio_click_summary"
+            android:title="@string/pref_audio_click_title"/>
 
     <br.com.helpdev.lapscounter.ui.widget.FloatPickerPreference
-        android:defaultValue="@integer/pref_lap_distance_default_value"
-        android:key="@string/pref_lap_distance_name"
-        android:title="@string/pref_lap_distance_title" />
+            android:icon="@drawable/ic_distance_gray"
+            android:defaultValue="@integer/pref_lap_distance_default_value"
+            android:key="@string/pref_lap_distance_name"
+            android:title="@string/pref_lap_distance_title"/>
 
 </PreferenceScreen>

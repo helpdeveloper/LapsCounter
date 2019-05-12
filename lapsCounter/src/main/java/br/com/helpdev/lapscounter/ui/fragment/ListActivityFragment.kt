@@ -15,8 +15,7 @@ import br.com.helpdev.lapscounter.ui.adapter.ListActivityAdapter
 import br.com.helpdev.lapscounter.ui.viewmodel.ListActivityViewModel
 
 class ListActivityFragment : Fragment() {
-
-
+    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentListActivityBinding.inflate(inflater, container, false).apply {
             subscribeUI(this)

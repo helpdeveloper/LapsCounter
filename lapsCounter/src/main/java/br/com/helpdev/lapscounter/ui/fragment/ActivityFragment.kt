@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.include_lap_log.view.*
 class ActivityFragment : Fragment() {
 
     private var dialog: AlertDialog? = null
-    private val activityEntity by lazy { ActivityFragmentArgs.fromBundle(arguments!!).activityEntity }
     private lateinit var viewModel: ActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,17 +48,18 @@ class ActivityFragment : Fragment() {
     }
 
     private fun subscribeUI(binding: FragmentActivityBinding) {
+        val activityEntity = ActivityFragmentArgs.fromBundle(arguments!!).activityEntity
         viewModel = loadViewModel()
         binding.viewModel = viewModel
         viewModel.init(context!!, activityEntity)
-        configureLapsLog(binding)
+        configureLapsLog(viewModel, binding)
     }
 
     private fun loadViewModel() = ViewModelProviders.of(this, InjectorUtils.provideActivityViewModelFactory())
         .get(ActivityViewModel::class.java)
 
-    private fun configureLapsLog(binding: FragmentActivityBinding) {
-        val toObLaps = activityEntity.chronometer!!.toObLaps()
+    private fun configureLapsLog(viewModel: ActivityViewModel, binding: FragmentActivityBinding) {
+        val toObLaps = viewModel.activityEntity?.chronometer!!.toObLaps()
         binding.layoutLog.recycler_view.adapter = LapsAdapter(context!!, toObLaps, false)
         if (toObLaps.isNotEmpty()) binding.layoutLog.text_view_empty.visibility = View.GONE
     }
@@ -71,7 +71,7 @@ class ActivityFragment : Fragment() {
     }
 
     private fun setTitleToolbar() {
-        (activity as ActivitiesActivity).supportActionBar?.title = activityEntity.name
+        (activity as ActivitiesActivity).supportActionBar?.title = viewModel.activityEntity?.name
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

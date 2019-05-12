@@ -12,12 +12,10 @@ class ChronometerViewModel(private val activityRepository: ActivityRepository) :
     var chronometer: Chronometer = Chronometer()
 
     fun saveActivity(name: String, description: String, lapDistance: Float, countLastLap: Boolean) {
-        thread {
-            chronometer.toActivityEntity(name, description, lapDistance).also {
-                it.countLastLap = countLastLap
-                it.travelledDistance = ChronometerUtils.getDistanceTravelled(chronometer, lapDistance, countLastLap)
-                activityRepository.save(it)
-            }
+        chronometer.toActivityEntity(name, description, lapDistance).also {
+            it.countLastLap = countLastLap
+            it.travelledDistance = ChronometerUtils.getDistanceTravelled(chronometer, lapDistance, countLastLap)
+            activityRepository.save(it)
         }
     }
 }

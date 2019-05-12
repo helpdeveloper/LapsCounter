@@ -18,19 +18,18 @@ class ActivityDao {
     }
 
     fun insertOrUpdate(activityEntity: ActivityEntity) {
-        Realm.getDefaultInstance().use { db ->
-            db.executeTransaction { realm ->
+        Realm.getDefaultInstance()
+            .executeTransactionAsync { realm ->
                 realm.insertOrUpdate(activityEntity)
             }
-        }
     }
 
     fun selectAll(): RealmLiveData<ActivityEntity> {
         return Realm.getDefaultInstance()
-                .where(ActivityEntity::class.java)
-                .sort("dateStarted", Sort.DESCENDING)
-                .findAllAsync()
-                .asLiveData()
+            .where(ActivityEntity::class.java)
+            .sort("dateStarted", Sort.DESCENDING)
+            .findAllAsync()
+            .asLiveData()
     }
 
     fun delete(activityEntity: ActivityEntity) {
