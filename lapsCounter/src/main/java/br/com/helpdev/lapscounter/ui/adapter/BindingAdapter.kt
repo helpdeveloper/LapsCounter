@@ -9,7 +9,7 @@ import java.util.*
 
 @BindingAdapter("formattedDate")
 fun formattedDate(textView: TextView, date: Date) {
-    textView.text = SimpleDateFormat("dd/MM/YYYY - HH:mm", Locale.getDefault()).format(date)
+    textView.text = SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.getDefault()).format(date)
 }
 
 @BindingAdapter("formattedChronometerTime")
