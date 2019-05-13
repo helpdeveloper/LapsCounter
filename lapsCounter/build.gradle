@@ -16,9 +16,9 @@ android {
     signingConfigs {
         releaseKey {
             keyAlias 'laps_counter'
-            keyPassword '48j8*eurO'
+            keyPassword '******'
             storeFile file('/home/gbzarelli/laps_counter.jks')
-            storePassword '48j8*eurO'
+            storePassword '******'
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
