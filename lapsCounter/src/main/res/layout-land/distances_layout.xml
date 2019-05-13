@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="headerDistances"
+                type="br.com.helpdev.lapscounter.ui.viewmodel.objects.HeaderDistances"/>
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:id="@+id/info_lap"
+                    style="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_distance_36"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@{headerDistances.lapDistance}"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="@string/info_distance_lap"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:id="@+id/info_travelled"
+                    style="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_sport_36"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@{headerDistances.travelledDistance}"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="@string/info_travelled"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:id="@+id/info_pace"
+                    style="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_pace_36"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@{headerDistances.pace}"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="@string/info_pace"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

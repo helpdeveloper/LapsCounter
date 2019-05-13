@@ -1,14 +1,24 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
+
+    /** Enable auto-generate data onCreateBinding */
+    dataBinding {
+        enabled = true
+    }
+
     signingConfigs {
         releaseKey {
             keyAlias 'laps_counter'
-            keyPassword '*****'
+            keyPassword '48j8*eurO'
             storeFile file('/home/gbzarelli/laps_counter.jks')
-            storePassword '*****'
+            storePassword '48j8*eurO'
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
@@ -16,12 +26,13 @@ android {
         applicationId "br.com.helpdev.lapscounter"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 5
-        versionName "1.3"
+        versionCode 6
+        versionName "2.0"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
-            minifyEnabled true
+//            minifyEnabled true // ( problems with data binding ?! )
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.releaseKey
         }
@@ -33,17 +44,21 @@ android {
 //        running { applicationIdSuffix ".running" }
 //        cycling { applicationIdSuffix ".cycling" }
     }
-    lintOptions {
-        checkReleaseBuilds false
-    }
+
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "com.android.support:design:$rootProject.androidSupportVersion"
-    implementation project(':chronometerLib')
-    implementation "com.android.support:support-v4:$rootProject.androidSupportVersion"
-    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
-    implementation "com.android.support:preference-v7:$rootProject.androidSupportVersion"
-    testImplementation "junit:junit:$rootProject.junitVersion"
+    implementation 'com.github.gbzarelli:chronometer-library:1.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    testImplementation "junit:junit:$junitVersion"
+    implementation "com.google.android.gms:play-services-ads:$playServicesAdsVersion"
+    implementation "androidx.multidex:multidex:$multidexVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.preference:preference:$preferenceVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "android.arch.navigation:navigation-fragment:$navigationVersion"
+    implementation "android.arch.navigation:navigation-ui:$navigationVersion"
 }

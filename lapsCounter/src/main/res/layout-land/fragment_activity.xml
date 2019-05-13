@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="br.com.helpdev.lapscounter.ui.viewmodel.ActivityViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.ActivitiesActivity">
+
+        <include
+                android:id="@+id/include_distances_layout"
+                layout="@layout/distances_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:headerDistances="@{viewModel.headerDistances}"/>
+
+        <TextView android:layout_width="0dp"
+                  android:id="@+id/info_last_lap"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="3dp"
+                  android:paddingBottom="3dp"
+                  android:paddingEnd="3dp"
+                  android:paddingStart="8dp"
+                  android:textStyle="italic"
+                  app:isGone="@{viewModel.activityEntity.countLastLap}"
+                  android:textColor="@color/white"
+                  android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+                  android:background="@color/red"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toBottomOf="@id/include_distances_layout"
+                  android:text="@string/info_last_lap"
+        />
+        <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{viewModel.activityEntity.description}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"
+                app:isGoneIfEmpty="@{viewModel.activityEntity.description}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_last_lap"
+                tools:text="@sample/activityEntity.json/description" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/layout_log" android:layout_marginBottom="8dp"
+                app:layout_constraintVertical_bias="0.0" app:layout_constraintBottom_toTopOf="@+id/info_chronometer"/>
+
+        <TextView
+                android:id="@+id/chronometer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_text_chronometer"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="@sample/activityEntity.json/runningTime"
+                app:formattedChronometerTime="@{viewModel.activityEntity.chronometer.runningTime}"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@id/layout_log"
+                android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center" app:layout_constraintTop_toBottomOf="@+id/info_last_lap"/>
+
+        <include
+                app:layout_constraintStart_toEndOf="@id/chronometer"
+                android:id="@+id/layout_log"
+                layout="@layout/include_lap_log"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toTopOf="@id/adView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/info_last_lap"/>
+
+        <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:adSize="BANNER"
+                app:adUnitId="@string/admob_banner_id"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+                android:text="@string/title_chronometer"
+                android:layout_width="wrap_content"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_height="wrap_content"
+                android:id="@+id/info_chronometer" app:layout_constraintBottom_toTopOf="@+id/chronometer"
+                app:layout_constraintEnd_toEndOf="@+id/chronometer"
+                app:layout_constraintStart_toStartOf="@+id/chronometer" android:layout_marginStart="8dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

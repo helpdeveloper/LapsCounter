@@ -2,7 +2,6 @@ package br.com.helpdev.lapscounter.headset
 
 import android.content.*
 import android.media.AudioManager
-import android.support.v4.content.LocalBroadcastManager
 import android.view.KeyEvent
 import br.com.helpdev.lapscounter.headset.receiver.HeadsetButtonReceiver
 
@@ -26,12 +25,15 @@ class HeadsetButtonControl {
         filter.addAction(HeadsetButtonReceiver.ACTION_KEYCODE_MEDIA_PREVIOUS)
         filter.addAction(HeadsetButtonReceiver.ACTION_KEYCODE_HEADSET_HOOK_DOUBLE_CLICK)
         filter.addAction(HeadsetButtonReceiver.ACTION_KEYCODE_UNDEFINED)
-        LocalBroadcastManager.getInstance(context).registerReceiver(broadcastButtonReceiver!!, filter)
+        androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(context)
+            .registerReceiver(broadcastButtonReceiver!!, filter)
     }
 
     fun unregisterHeadsetButton(context: Context) {
         if (null != receiverComponent) audioManager?.unregisterMediaButtonEventReceiver(receiverComponent)
-        if (null != broadcastButtonReceiver) LocalBroadcastManager.getInstance(context).unregisterReceiver(broadcastButtonReceiver!!)
+        if (null != broadcastButtonReceiver) androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(
+            context
+        ).unregisterReceiver(broadcastButtonReceiver!!)
     }
 
     interface HeadsetButtonControlListener {

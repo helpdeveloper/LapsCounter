@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.support.v4.content.LocalBroadcastManager
 import android.view.KeyEvent
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -42,7 +41,7 @@ class HeadsetButtonReceiver : BroadcastReceiver() {
 
     private fun sendBroadcast(context: Context, intent: Intent, event: KeyEvent, broadcast: Intent) {
         intent.putExtra(PARAM_KEY_EVENT, event)
-        LocalBroadcastManager.getInstance(context).sendBroadcast(broadcast)
+        androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(context).sendBroadcast(broadcast)
     }
 
     companion object {

@@ -14,10 +14,10 @@
     <string name="menu_settings">Settings</string>
     <string name="bt_continue">RESUME</string>
     <string name="menu_activities">Activities</string>
-    <string name="bt_save">SHARE</string>
+    <string name="bt_share">SHARE</string>
     <string name="paused_time">PAUSED TIME</string>
-    <string name="num_lap">Nº %s</string>
-    <string name="default_time_zero">00:00.0</string>
+    <string name="num_lap" translatable="false">Nº %s</string>
+    <string name="default_time_zero" translatable="false">00:00.0</string>
     <string name="bt_stop">STOP</string>
     <string name="title_settings">Settings</string>
     <string name="title_activities">Activities</string>
@@ -25,7 +25,7 @@
     <string name="text_to_share" formatted="true">
         Activity at: %s \n
         \nTimed time: %s
-        \Paused time: %s
+        \nPaused time: %s
         \nTotal time: %s
         \n\nLap distance: %s
         \nTravelled distance: %s
@@ -35,7 +35,31 @@
         %s
         ==================
     </string>
-    <string name="text_lap_share" formatted="true">\Lap: %d\nTime: %s\nAccumulated: %s\nPaused: %s\nPace: %s\n</string>
-<string name="last_lap_dont_count">(Last lap does not count at full pace and distance)</string>
-
+    <string name="text_lap_share" formatted="true">
+        \nLap: %d
+        \nTime: %s
+        \nAccumulated: %s
+        \nPaused: %s
+        \nPace: %s
+        \n
+    </string>
+    <string name="last_lap_dont_count">(Last lap does not count at full pace and distance)</string>
+    <string name="bt_save">SAVE</string>
+    <string name="confirm_exit">Confirm exit?</string>
+    <string name="save_activity_message">Your activity info</string>
+    <string name="hint_name_activity">Activity name</string>
+    <string name="hint_description_activity">Activity description</string>
+    <string name="error_empty_name">Empty name is not allow</string>
+    <string name="activity_saved">Activity saved</string>
+    <string name="first_show_ad">Hello,\n\n First of all we apologize for the inconvenience, but for the Developer to
+        invoice a little we will show a brief announcement (which can be skipped) when entering the activities screen,
+        so we will not bother during your activity.\n\n Thank you for understanding.
+    </string>
+    <string name="hint_input_lap_distance">Enter with lap distance</string>
+    <string name="title_list_activity">List of Activities</string>
+    <string name="menu_remove">Remove</string>
+    <string name="activity_removed">Activity removed</string>
+    <string name="confirm_delete">Do you confirm delete activity?</string>
+    <string name="info_last_lap">Last lap not counted in the distance/pace</string>
+    <string name="menu_share">Share</string>
 </resources>
