@@ -59,4 +59,5 @@
     <string name="activity_removed">Atividade removida</string>
     <string name="confirm_delete">Você confirma excluir atividade?</string>
     <string name="info_last_lap">Última volta não contabilizada na distância/pace</string>
+    <string name="menu_share">Share</string>
 </resources>

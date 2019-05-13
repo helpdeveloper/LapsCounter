@@ -15,6 +15,7 @@ import br.com.helpdev.lapscounter.model.entity.toObLaps
 import br.com.helpdev.lapscounter.ui.ActivitiesActivity
 import br.com.helpdev.lapscounter.ui.adapter.LapsAdapter
 import br.com.helpdev.lapscounter.ui.viewmodel.ActivityViewModel
+import br.com.helpdev.lapscounter.utils.ChronometerShareUtils
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_activity.*
@@ -89,10 +90,12 @@ class ActivityFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.isRemoveItem()) showDialogDelete()
+        else if (item.isShareMenu()) shareActivity()
         return super.onOptionsItemSelected(item)
     }
 
     private fun MenuItem.isRemoveItem() = itemId == R.id.menu_remove
+    private fun MenuItem.isShareMenu() = itemId == R.id.menu_share
 
     private fun showDialogDelete() {
         AlertDialog.Builder(context!!).apply {
@@ -101,6 +104,12 @@ class ActivityFragment : Fragment() {
             setPositiveButton(android.R.string.ok) { _, _ -> deleteActivity() }
             setNegativeButton(android.R.string.cancel, null)
         }.let { dialog = it.create(); dialog!! }.let { it.show() }
+    }
+
+    private fun shareActivity() {
+        viewModel.activityEntity.value?.let {
+            ChronometerShareUtils.shareText(context!!, it)
+        }
     }
 
     private fun deleteActivity() {

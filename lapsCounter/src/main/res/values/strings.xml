@@ -61,4 +61,5 @@
     <string name="activity_removed">Activity removed</string>
     <string name="confirm_delete">Do you confirm delete activity?</string>
     <string name="info_last_lap">Last lap not counted in the distance/pace</string>
+    <string name="menu_share">Share</string>
 </resources>

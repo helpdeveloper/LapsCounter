@@ -1,8 +1,19 @@
 package br.com.helpdev.lapscounter.utils
 
 import br.com.helpdev.chronometerlib.Chronometer
+import br.com.helpdev.lapscounter.model.entity.ActivityEntity
 
 object ChronometerUtils {
+    fun getPace(activityEntity: ActivityEntity) =
+        getPace(getRunningTimeToPace(activityEntity), activityEntity.travelledDistance)
+
+    private fun getRunningTimeToPace(activityEntity: ActivityEntity): Long {
+        val removedTimeToPace = if (activityEntity.countLastLap) {
+            0
+        } else
+            activityEntity.chronometer!!.laps.last()?.runningTime ?: 0
+        return (activityEntity.chronometer!!.runningTime - removedTimeToPace)
+    }
 
     fun getPace(chronometer: Chronometer, lapDistance: Float, countLastLap: Boolean): Pair<Long, Long> {
         val distanceTravelled = getDistanceTravelled(chronometer, lapDistance, countLastLap)
@@ -32,8 +43,8 @@ object ChronometerUtils {
     }
 
     private fun countLastLap(chronometer: Chronometer, countLastLap: Boolean) =
-            if (countLastLap && chronometer.getRunningTime() > 0 && Chronometer.STATUS_STOPPED == chronometer.status)
-                0
-            else
-                1
+        if (countLastLap && chronometer.getRunningTime() > 0 && Chronometer.STATUS_STOPPED == chronometer.status)
+            0
+        else
+            1
 }
