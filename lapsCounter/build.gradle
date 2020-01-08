@@ -52,7 +52,7 @@ dependencies {
     /**
      * https://github.com/gbzarelli/chronometer-library
      */
-    implementation 'com.github.gbzarelli:chronometer-library:1.0.0'
+    implementation 'com.github.gbzarelli:chronometer-library:2.0.3'
 
     implementation "com.google.android.gms:play-services-ads:$playServicesAdsVersion"
     implementation "androidx.multidex:multidex:$multidexVersion"
